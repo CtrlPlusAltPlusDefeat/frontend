@@ -1,0 +1,15 @@
+build
+*.png
+*.svg
+*.zip
+*.md
+*.txt
+*.yml
+.gitignore
+.prettierignore
+tsconfig.json
+tsconfig.node.json
+vite.config.ts
+package-lock.json
+package.json
+.prettierrc

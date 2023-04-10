@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "react-app",
+    "prettier",
+    "airbnb-typescript"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    // Note: you must disable the base rule as it can report incorrect errors
+    "indent": "off",
+    "@typescript-eslint/indent": "off",
+    "@typescript-eslint/no-shadow": "off",
+    "@typescript-eslint/comma-dangle": "off"
+  }
+}

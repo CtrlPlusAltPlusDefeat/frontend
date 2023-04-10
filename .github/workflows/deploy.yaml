@@ -29,15 +29,15 @@ jobs:
           commit: ${{ github.event.pull_request.head.sha }}
           path: ./build
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      # - name: Configure AWS credentials
+      #   uses: aws-actions/configure-aws-credentials@v1
 
-      - name: Run Deploy
-        run: |
-        aws s3 sync ./build/ s3://${{ secrets.S3_BUCKET }} --delete --sse=AES256
-        response=$(aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*')
+      # - name: Run Deploy
+      #   run: |
+      #   aws s3 sync ./build/ s3://${{ secrets.S3_BUCKET }} --delete --sse=AES256
+      #   response=$(aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*')
 
-        id=$(echo $response | grep "Id" | awk -F'"' '{ print $4 }')
+      #   id=$(echo $response | grep "Id" | awk -F'"' '{ print $4 }')
 
-        echo $response
-        echo $id
+      #   echo $response
+      #   echo $id

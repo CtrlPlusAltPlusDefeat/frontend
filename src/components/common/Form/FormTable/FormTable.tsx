@@ -1,11 +1,12 @@
 import React from 'react';
 import { z } from 'zod';
 import { Form, FormikProvider, useFormik } from 'formik';
+import { FormikHelpers } from 'formik/dist/types';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
-import { motion, TargetAndTransition } from 'framer-motion';
+import { AnimationControls, motion, TargetAndTransition, VariantLabels } from 'framer-motion';
 import ActionButton from '../../ActionButton/ActionButton';
 import { getFields } from './FormTable.functions';
-import { FormTableProps, SchemaRecord } from '../types';
+import { Rows, SchemaRecord, SubmitButtonProps } from '../types';
 
 const defaultAnimation: TargetAndTransition = {
 	opacity: 1,
@@ -16,6 +17,15 @@ const defaultAnimation: TargetAndTransition = {
 		delay: 0.16
 	}
 };
+
+export interface FormTableProps<Schema extends z.ZodType<unknown>> {
+	schema: Schema;
+	children?: React.ReactNode;
+	rows: Rows<Schema>[];
+	onSubmit: (values: SchemaRecord<Schema>, helpers: FormikHelpers<Record<string, unknown>>) => void | Promise<unknown>;
+	submitButton: SubmitButtonProps;
+	animation?: AnimationControls | TargetAndTransition | VariantLabels | boolean;
+}
 
 const FormTable = <Schema extends z.ZodType<unknown>>({ schema, rows, children, onSubmit, animation, submitButton }: FormTableProps<Schema>) => {
 	const defaultValues: Record<string, unknown> = {};

@@ -1,8 +1,6 @@
 import { z } from 'zod';
 import { ActionButtonState } from '../ActionButton/ActionButton';
 import React from 'react';
-import { FormikHelpers } from 'formik/dist/types';
-import { AnimationControls, TargetAndTransition, VariantLabels } from 'framer-motion';
 import { SelectInputProps } from '@mui/material/Select/SelectInput';
 import { InputProps as StandardInputProps } from '@mui/material/Input/Input';
 
@@ -17,15 +15,6 @@ export interface SubmitButtonProps {
 
 export interface Rows<Schema extends z.ZodType<unknown>> {
 	fields: InputTypes<SchemaKey<Schema>>[];
-}
-
-export interface FormTableProps<Schema extends z.ZodType<unknown>> {
-	schema: Schema;
-	children?: React.ReactNode;
-	rows: Rows<Schema>[];
-	onSubmit: (values: SchemaRecord<Schema>, helpers: FormikHelpers<Record<string, unknown>>) => void | Promise<unknown>;
-	submitButton: SubmitButtonProps;
-	animation?: AnimationControls | TargetAndTransition | VariantLabels | boolean;
 }
 
 export interface Input<Id = string> {

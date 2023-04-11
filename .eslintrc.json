@@ -9,5 +9,6 @@
 		"@typescript-eslint/indent": "off",
 		"@typescript-eslint/no-shadow": "off",
 		"@typescript-eslint/comma-dangle": "off"
-	}
+	},
+	"ignorePatterns": ["tailwind.config.js", "postcss.config.js"]
 }

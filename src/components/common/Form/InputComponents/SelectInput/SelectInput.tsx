@@ -17,10 +17,21 @@ const SelectInput: FC<SelectProps> = (field) => {
 		);
 	});
 	const { helperText } = field;
+	const labelId = `${field.id}-label`;
 	return (
-		<FormControl required={field.required} fullWidth>
-			<InputLabel id={`${field.id}-label`}>{field.label}</InputLabel>
-			<Select id={field.id} name={field.id} labelId={`${field.id}-label`} required={field.required} onChange={field.onChange} onBlur={field.onBlur} multiple={field.multiple} disabled={field.disabled}>
+		<FormControl required={field.required} error={field.error} disabled={field.disabled} fullWidth>
+			<InputLabel id={labelId}>{field.label}</InputLabel>
+			<Select
+				id={field.id}
+				name={field.id}
+				label={field.label}
+				labelId={labelId}
+				required={field.required}
+				onChange={field.onChange}
+				onBlur={field.onBlur}
+				multiple={field.multiple}
+				disabled={field.disabled}
+			>
 				{items}
 			</Select>
 			{helperText && <FormHelperText>{helperText}</FormHelperText>}

@@ -1,8 +1,7 @@
 import { Meta, Story } from '@storybook/react';
 import React from 'react';
 import { z } from 'zod';
-import { FormTableProps } from '../types';
-import FormTable from './FormTable';
+import FormTable, { FormTableProps } from './FormTable';
 
 export default {
 	title: 'Common/Form Table',
@@ -17,7 +16,9 @@ const schema = z.object({
 	lastName: z.string(),
 	password: z.string(),
 	password2: z.string(),
-	testSelect: z.string()
+	testSelect: z.string(),
+	testRadio: z.string(),
+	testNumber: z.number().min(2).max(11)
 });
 
 const props: FormTableProps<typeof schema> = {
@@ -61,6 +62,35 @@ const props: FormTableProps<typeof schema> = {
 						id: 'password2',
 						required: true,
 						default: '1222223'
+					}
+				}
+			]
+		},
+		{
+			fields: [
+				{
+					type: 'select',
+					field: {
+						label: 'Test Select',
+						id: 'testSelect',
+						items: ['Item1', { name: '2', value: 'Item2' }]
+					}
+				},
+				{
+					type: 'radio',
+					field: {
+						label: 'Test Radio',
+						id: 'testRadio',
+						items: ['Item1', 'Item2']
+					}
+				},
+				{
+					type: 'number',
+					field: {
+						label: 'Test Number',
+						id: 'testNumber',
+						max: 10,
+						min: 2
 					}
 				}
 			]

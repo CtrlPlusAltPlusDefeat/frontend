@@ -6,7 +6,7 @@ import { InputProps as StandardInputProps } from '@mui/material/Input/Input';
 
 export type SchemaKey<Schema extends z.ZodType<unknown>> = keyof z.infer<Schema> & string;
 export type SchemaRecord<Schema extends z.ZodType<unknown>> = z.infer<Schema>;
-export type InputTypes<Id> = { type: 'text' | 'password'; field: Input<Id> } | { type: 'select'; field: Select<Id> };
+export type InputTypes<Id> = { type: 'text' | 'password' | 'number'; field: Input<Id> } | { type: 'select'; field: Select<Id> } | { type: 'radio'; field: Radio<Id> };
 
 export interface SubmitButtonProps {
 	color: ActionButtonState;
@@ -44,4 +44,17 @@ export interface Select<Id = string> {
 	default?: unknown;
 	onChange?: SelectInputProps<string>['onChange'];
 	onBlur?: StandardInputProps['onBlur'];
+}
+
+export interface Radio<Id = string> {
+	id: Id;
+	required?: boolean;
+	disabled?: boolean;
+	error?: boolean;
+	label?: string;
+	helperText?: React.ReactNode;
+	items?: (string | { name: string; value: string })[];
+	default?: unknown;
+	onChange?: React.FormEventHandler<HTMLLabelElement>;
+	onBlur?: React.FocusEventHandler<HTMLLabelElement>;
 }

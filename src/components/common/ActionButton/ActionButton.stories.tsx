@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import ActionButton from './ActionButton';
 
 const meta: Meta<typeof ActionButton> = {
-	title: 'Common/ActionButton',
+	title: 'Common/Action Button',
 	component: ActionButton
 };
 
@@ -16,7 +16,7 @@ export const Success: Story = {
 	args: {
 		onClick: () => {},
 		text: 'some text',
-		type: 'success'
+		state: 'success'
 	},
 	render: (args) => {
 		return <ActionButton {...args} />;
@@ -26,7 +26,7 @@ export const Danger: Story = {
 	args: {
 		onClick: () => {},
 		text: 'some text',
-		type: 'danger'
+		state: 'danger'
 	},
 	render: (args) => {
 		return <ActionButton {...args} />;

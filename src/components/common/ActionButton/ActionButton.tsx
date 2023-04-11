@@ -1,14 +1,16 @@
-type ActionButtonType = 'success' | 'danger';
+export type ActionButtonState = 'success' | 'danger' | 'loading';
 
 interface ActionButtonProps {
 	text: string;
-	onClick: () => void;
-	type?: ActionButtonType;
+	onClick?: () => void;
+	state?: ActionButtonState;
+	type?: 'submit' | 'reset' | 'button' | undefined;
+	classes?: string[];
 }
 
-const ActionButton = ({ text, onClick, type }: ActionButtonProps) => {
-	const classNames: string[] = [];
-	switch (type) {
+const ActionButton = ({ text, onClick, state, type, classes }: ActionButtonProps) => {
+	const classNames: string[] = [...(classes ?? [])];
+	switch (state) {
 		case 'danger':
 			classNames.push('bg-red-700');
 			classNames.push('hover:bg-red-800');
@@ -23,7 +25,7 @@ const ActionButton = ({ text, onClick, type }: ActionButtonProps) => {
 	}
 
 	return (
-		<button className={`py-2 px-3 max-w-sm rounded shadow shadow-slate-500 ${classNames.join(' ')}`} onClick={onClick}>
+		<button type={type} className={`py-2 px-3 rounded shadow shadow-slate-500 ${classNames.join(' ')}`} onClick={onClick}>
 			{text}
 		</button>
 	);

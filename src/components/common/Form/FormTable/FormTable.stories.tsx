@@ -88,9 +88,7 @@ const props: FormTableProps<typeof schema> = {
 					type: 'number',
 					field: {
 						label: 'Test Number',
-						id: 'testNumber',
-						max: 10,
-						min: 2
+						id: 'testNumber'
 					}
 				}
 			]

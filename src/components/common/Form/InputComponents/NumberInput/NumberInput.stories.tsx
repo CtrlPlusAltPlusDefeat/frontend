@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import { NumberInput as NumberInputType } from '../../types';
+import { Input } from '../../types';
 import NumberInput from './NumberInput';
 
 export default {
@@ -9,12 +9,10 @@ export default {
 	argTypes: {}
 } as Meta<typeof NumberInput>;
 
-const Template: Story<NumberInputType> = (args) => <NumberInput {...args} />;
+const Template: Story<Input> = (args) => <NumberInput {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {
 	id: 'number',
-	label: 'Number Input',
-	min: 1,
-	max: 10
+	label: 'Number Input'
 };

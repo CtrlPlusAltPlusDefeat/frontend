@@ -50,7 +50,7 @@ const FormTable = <Schema extends z.ZodType<unknown>>({ schema, rows, children, 
 					<motion.div className="flex gap-3 flex-col" initial={{ opacity: 0, y: 40 }} animate={animation ?? defaultAnimation}>
 						{getFields({ rows, getFieldProps, errors, touched })}
 						{children}
-						<ActionButton type="submit" state="success" text={isSubmitting ? 'loading...' : submitButton.text} />
+						<ActionButton classes={['w-full']} type="submit" state="success" text={isSubmitting ? 'loading...' : submitButton.text} />
 					</motion.div>
 				</motion.div>
 			</Form>

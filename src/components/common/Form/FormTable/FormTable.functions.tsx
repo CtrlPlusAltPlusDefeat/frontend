@@ -13,9 +13,8 @@ interface GetFieldsProps<Schema extends z.ZodType<unknown>> {
 
 export const getFields = <Schema extends z.ZodType<unknown>>({ rows, getFieldProps, errors, touched }: GetFieldsProps<Schema>) => {
 	return rows.map((row, rowIndex) => {
-		//const colLength = 12 / row.fields.length;
 		return (
-			<div key={`grid-${rowIndex}`}>
+			<div key={`grid-${rowIndex}`} className={'flex gap-2'}>
 				{row.fields.map((input, fieldIndex) => {
 					const { type, field } = input;
 					delete field.default;
@@ -24,7 +23,7 @@ export const getFields = <Schema extends z.ZodType<unknown>>({ rows, getFieldPro
 					const hasTouched: boolean | undefined = touched[field.id] as boolean | undefined;
 
 					return (
-						<div key={`grid-${rowIndex}-${fieldIndex}`}>
+						<div key={`grid-${rowIndex}-${fieldIndex}`} className="w-full">
 							{getInput({
 								type,
 								field: {

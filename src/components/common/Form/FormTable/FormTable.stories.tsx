@@ -5,7 +5,7 @@ import { FormTableProps } from '../types';
 import FormTable from './FormTable';
 
 export default {
-	title: '@env-byte/Form/Form Table',
+	title: 'Common/Form Table',
 	component: FormTable,
 	argTypes: {}
 } as Meta<typeof FormTable>;
@@ -39,6 +39,28 @@ const props: FormTableProps<typeof schema> = {
 						id: 'lastName',
 						label: 'Last Name',
 						default: 'Penn'
+					}
+				}
+			]
+		},
+		{
+			fields: [
+				{
+					type: 'password',
+					field: {
+						label: 'Password',
+						id: 'password',
+						required: true,
+						default: '123'
+					}
+				},
+				{
+					type: 'password',
+					field: {
+						label: 'Confirm Password',
+						id: 'password2',
+						required: true,
+						default: '1222223'
 					}
 				}
 			]

@@ -5,10 +5,11 @@ interface ActionButtonProps {
 	onClick?: () => void;
 	state?: ActionButtonState;
 	type?: 'submit' | 'reset' | 'button' | undefined;
+	classes?: string[];
 }
 
-const ActionButton = ({ text, onClick, state, type }: ActionButtonProps) => {
-	const classNames: string[] = [];
+const ActionButton = ({ text, onClick, state, type, classes }: ActionButtonProps) => {
+	const classNames: string[] = [...(classes ?? [])];
 	switch (state) {
 		case 'danger':
 			classNames.push('bg-red-700');
@@ -24,7 +25,7 @@ const ActionButton = ({ text, onClick, state, type }: ActionButtonProps) => {
 	}
 
 	return (
-		<button type={type} className={`py-2 px-3 max-w-sm rounded shadow shadow-slate-500 ${classNames.join(' ')}`} onClick={onClick}>
+		<button type={type} className={`py-2 px-3 rounded shadow shadow-slate-500 ${classNames.join(' ')}`} onClick={onClick}>
 			{text}
 		</button>
 	);

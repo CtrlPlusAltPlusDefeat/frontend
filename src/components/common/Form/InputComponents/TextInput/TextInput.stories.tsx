@@ -4,7 +4,7 @@ import React from 'react';
 import { Input } from '../../types';
 
 export default {
-	title: '@env-byte/Form/Input/Text',
+	title: 'Common/Form Component/Input/Text',
 	component: TextInput,
 	argTypes: {}
 } as Meta<typeof TextInput>;

@@ -4,7 +4,7 @@ import PasswordInput from './PasswordInput';
 import { Input } from '../../types';
 
 export default {
-	title: '@env-byte/Form/Input/Password',
+	title: 'Common/Form Component/Input/Password',
 	component: PasswordInput,
 	argTypes: {}
 } as Meta<typeof PasswordInput>;

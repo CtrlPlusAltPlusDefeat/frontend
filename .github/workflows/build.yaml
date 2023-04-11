@@ -1,9 +1,9 @@
 name: Build
 
 on:
-  pull_request:
-    branches:
-      - main
+ pull_request:
+  branches:
+   - main
 
 jobs:
  build:
@@ -28,4 +28,4 @@ jobs:
      uses: actions/upload-artifact@v1
      with:
       name: build
-      path: build
+      path: dist

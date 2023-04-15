@@ -6,7 +6,7 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { AnimationControls, motion, TargetAndTransition, VariantLabels } from 'framer-motion';
 import ActionButton from '../../ActionButton/ActionButton';
 import { getFields } from './FormTable.functions';
-import { Rows, SchemaRecord, SubmitButtonProps } from '../types';
+import { Row, SchemaRecord, SubmitButtonProps } from '../types';
 
 const defaultAnimation: TargetAndTransition = {
 	opacity: 1,
@@ -21,7 +21,7 @@ const defaultAnimation: TargetAndTransition = {
 export interface FormTableProps<Schema extends z.ZodType<unknown>> {
 	schema: Schema;
 	children?: React.ReactNode;
-	rows: Rows<Schema>[];
+	rows: Row<Schema>[];
 	onSubmit: (values: SchemaRecord<Schema>, helpers: FormikHelpers<Record<string, unknown>>) => void | Promise<unknown>;
 	submitButton: SubmitButtonProps;
 	animation?: AnimationControls | TargetAndTransition | VariantLabels | boolean;

@@ -1,5 +1,15 @@
+import ChatBox from '../../components/common/ChatBox/ChatBox';
+import { useWebsocket } from '../../contexts/WebSocketContext';
+
 const Home = () => {
-	return <div>Home Page</div>;
+	const { isConnected } = useWebsocket();
+
+	return (
+		<div>
+			Home Page. Is Connected: {isConnected ? 'Yes' : 'No'}
+			<ChatBox />
+		</div>
+	);
 };
 
 export default Home;

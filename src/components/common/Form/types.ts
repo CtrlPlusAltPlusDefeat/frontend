@@ -6,14 +6,20 @@ import { InputProps as StandardInputProps } from '@mui/material/Input/Input';
 
 export type SchemaKey<Schema extends z.ZodType<unknown>> = keyof z.infer<Schema> & string;
 export type SchemaRecord<Schema extends z.ZodType<unknown>> = z.infer<Schema>;
-export type InputTypes<Id> = { type: 'text' | 'password' | 'number'; field: Input<Id> } | { type: 'select'; field: Select<Id> } | { type: 'radio'; field: Radio<Id> };
+export type InputTypes<Id> =
+	| { type: 'text' | 'password' | 'number'; field: Input<Id> }
+	| {
+			type: 'select';
+			field: Select<Id>;
+	  }
+	| { type: 'radio'; field: Radio<Id> };
 
 export interface SubmitButtonProps {
 	color: ActionButtonState;
 	text: string;
 }
 
-export interface Rows<Schema extends z.ZodType<unknown>> {
+export interface Row<Schema extends z.ZodType<unknown>> {
 	fields: InputTypes<SchemaKey<Schema>>[];
 }
 

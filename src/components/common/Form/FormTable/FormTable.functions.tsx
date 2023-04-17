@@ -1,7 +1,7 @@
 import React from 'react';
 import { FieldInputProps, FormikErrors, FormikTouched } from 'formik/dist/types';
 import { z } from 'zod';
-import { Rows } from '../types';
+import { Row } from '../types';
 import TextInput from '../InputComponents/TextInput/TextInput';
 import PasswordInput from '../InputComponents/PasswordInput/PasswordInput';
 import SelectInput from '../InputComponents/SelectInput/SelectInput';
@@ -26,7 +26,7 @@ const getInput = <Id extends string>({ type, field }: InputTypes<Id>) => {
 };
 
 interface GetFieldsProps<Schema extends z.ZodType<unknown>> {
-	rows: Rows<Schema>[];
+	rows: Row<Schema>[];
 	getFieldProps: (nameOrOptions: any) => FieldInputProps<any>;
 	errors: FormikErrors<Record<string, unknown>>;
 	touched: FormikTouched<Record<string, unknown>>;

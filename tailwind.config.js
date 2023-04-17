@@ -5,10 +5,13 @@ export default {
 	content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
 	theme: {
 		extend: {
-			fontFamily: {
-				sans: ['Inter var', ...defaultTheme.fontFamily.sans]
-			}
-		}
+			colors: {
+				primaryRed: 'rgb(var(--accent-red))',
+				primaryBlue: 'rgb(var(--accent-blue))',
+				primaryWhite: 'rgb(var(--primary-white))',
+				primaryGrey: 'rgb(var(--primary-grey))'
+			},
+		},
 	},
 	plugins: []
 };

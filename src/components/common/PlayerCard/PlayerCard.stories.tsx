@@ -14,6 +14,11 @@ const meta: Meta<typeof PlayerCard> = {
 export default meta;
 
 export const Default: Story = {
+	args: {
+		onClick: () => {},
+		name: 'Username',
+		score: 0
+	},
 	render: () => {
 		return <PlayerCard />;
 	}

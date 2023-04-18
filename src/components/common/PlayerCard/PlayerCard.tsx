@@ -1,6 +1,13 @@
 import { XMarkIcon } from '@heroicons/react/20/solid';
 
-const PlayerCard = ({ name = 'Username', photo = '', score = 0 }) => {
+interface PlayerCardProps {
+	name: string;
+	photo: string;
+	score: number;
+	onClick?: () => void;
+}
+
+const PlayerCard = ({ name, photo, score, onClick }: PlayerCardProps) => {
 	return (
 		<>
 			{/* Main Container */}
@@ -10,7 +17,7 @@ const PlayerCard = ({ name = 'Username', photo = '', score = 0 }) => {
 					{name}
 					<div className="text-sm text-primaryGrey">Score: {score}</div>
 				</div>
-				<XMarkIcon className="w-5 hover:text-primaryRed" />
+				<XMarkIcon className="w-5 hover:text-primaryRed" onClick={onClick} />
 			</div>
 		</>
 	);

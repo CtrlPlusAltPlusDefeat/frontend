@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 @layer base {
-    :root {
-        --accent-red: 255 90 90;
-        --accent-blue: 64 200 200;
-        --primary-white: 195 202 208;
-        --primary-grey: 255 255 255;
-    }
-  }
+	:root {
+		--accent-red: 255 90 90;
+		--accent-blue: 64 200 200;
+		--primary-grey: 195 202 208;
+		--primary-white: 255 255 255;
+	}
+}

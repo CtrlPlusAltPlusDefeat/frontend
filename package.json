@@ -15,6 +15,7 @@
   "dependencies": {
     "@emotion/styled": "^11.10.6",
     "@headlessui/vue": "^1.7.12",
+    "@heroicons/react": "^2.0.17",
     "@heroicons/vue": "^2.0.17",
     "@iconify/react": "^4.1.0",
     "@mui/material": "^5.12.0",

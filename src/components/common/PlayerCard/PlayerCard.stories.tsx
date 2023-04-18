@@ -17,9 +17,10 @@ export const Default: Story = {
 	args: {
 		onClick: () => {},
 		name: 'Username',
-		score: 0
+		score: 0,
+		photo: ''
 	},
-	render: () => {
-		return <PlayerCard />;
+	render: (args) => {
+		return <PlayerCard {...args} />;
 	}
 };

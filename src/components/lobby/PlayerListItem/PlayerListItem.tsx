@@ -1,13 +1,13 @@
 import { XMarkIcon } from '@heroicons/react/20/solid';
 
-interface PlayerCardProps {
+interface PlayerListItemProps {
 	name: string;
 	photo: string;
 	score: number;
 	onClick?: () => void;
 }
 
-const PlayerCard = ({ name, photo, score, onClick }: PlayerCardProps) => {
+const PlayerListItem = ({ name, photo, score, onClick }: PlayerListItemProps) => {
 	return (
 		<>
 			{/* Main Container */}
@@ -23,4 +23,4 @@ const PlayerCard = ({ name, photo, score, onClick }: PlayerCardProps) => {
 	);
 };
 
-export default PlayerCard;
+export default PlayerListItem;

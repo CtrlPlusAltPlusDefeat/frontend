@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import PlayerCard from './PlayerCard';
+import PlayerListItem from './PlayerListItem';
 
 /* Simple Story helper */
-type Story = StoryObj<typeof PlayerCard>;
+type Story = StoryObj<typeof PlayerListItem>;
 
-const meta: Meta<typeof PlayerCard> = {
+const meta: Meta<typeof PlayerListItem> = {
 	/* Name in storybook */
-	title: 'Lobby/PlayerCard',
+	title: 'Lobby/Player List Item',
 	/* The component we want to render */
-	component: PlayerCard
+	component: PlayerListItem
 };
 
 export default meta;
@@ -21,6 +21,6 @@ export const Default: Story = {
 		photo: ''
 	},
 	render: (args) => {
-		return <PlayerCard {...args} />;
+		return <PlayerListItem {...args} />;
 	}
 };

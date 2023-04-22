@@ -22,9 +22,9 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-	<React.StrictMode>
-		<WebsocketProvider>
+	<WebsocketProvider>
+		<React.StrictMode>
 			<RouterProvider router={router} fallbackElement={<div>Loading...</div>} />
-		</WebsocketProvider>
-	</React.StrictMode>
+		</React.StrictMode>
+	</WebsocketProvider>
 );

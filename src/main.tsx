@@ -11,13 +11,11 @@ const router = createBrowserRouter([
 	{
 		path: '/',
 		element: <HomeController />,
-		errorElement: <div>404 Not Found!</div>,
-		children: [
-			{
-				path: 'lobby/:lobbyId',
-				element: <LobbyController />
-			}
-		]
+		errorElement: <div>404 Not Found!</div>
+	},
+	{
+		path: '/lobby/:lobbyId',
+		element: <LobbyController />
 	}
 ]);
 

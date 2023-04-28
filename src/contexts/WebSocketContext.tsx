@@ -7,6 +7,7 @@ import { devTools } from '../common/devTools';
 const socketEndpoint: string = import.meta.env.SOCKET_ENDPOINT ?? 'wss://35hlhhl6z3.execute-api.eu-west-2.amazonaws.com/default';
 const socketRetryTime: number = Number(import.meta.env.SOCKET_RETRY_TIME) ?? 10000;
 
+
 interface WebSocketContextObj {
 	isConnected: boolean;
 	send: (rawMessage: SocketMessage) => void;

@@ -4,6 +4,9 @@ import { getSessionRequest } from '../stores/player/playerActions';
 import { useSocketRoute } from '../hooks/socketRouter';
 import { devTools } from '../common/devTools';
 
+const socketEndpoint: string = import.meta.env.SOCKET_ENDPOINT ?? 'wss://35hlhhl6z3.execute-api.eu-west-2.amazonaws.com/default';
+const socketRetryTime: number = Number(import.meta.env.SOCKET_RETRY_TIME) ?? 10000;
+
 interface WebSocketContextObj {
 	isConnected: boolean;
 	send: (rawMessage: SocketMessage) => void;
@@ -30,7 +33,7 @@ export const WebsocketProvider = ({ children }: { children: React.ReactNode }) =
 
 	const connectToSocket = useCallback(() => {
 		if (ws.current) return;
-		const socket = new WebSocket('ws://localhost:8080');
+		const socket = new WebSocket(socketEndpoint);
 		socket.onopen = () => {
 			setIsConnected(true);
 			send(getSessionRequest());
@@ -51,7 +54,7 @@ export const WebsocketProvider = ({ children }: { children: React.ReactNode }) =
 	useEffect(() => {
 		const interval = setInterval(() => {
 			connectToSocket();
-		}, 1000);
+		}, socketRetryTime);
 
 		return () => {
 			clearInterval(interval);

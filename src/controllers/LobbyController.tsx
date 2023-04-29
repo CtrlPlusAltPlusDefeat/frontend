@@ -11,6 +11,7 @@ const LobbyController = () => {
 	useGetLobby(lobbyId);
 
 	if (!lobbyId) return <div>Lobby Not Found</div>;
+	console.log(player);
 	if (player && !player.name)
 		return (
 			<>

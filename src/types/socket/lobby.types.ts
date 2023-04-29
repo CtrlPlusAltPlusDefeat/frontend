@@ -4,14 +4,13 @@ export const LobbyTypes = {
 	ClientActions: {
 		Join: 'join',
 		Create: 'create',
-		Get: 'get',
 		SetName: 'set-name'
 	},
 	ServerActions: {
 		Joined: 'joined',
 		PlayerJoined: 'player-joined',
 		PlayerLeft: 'player-left',
-		Get: 'get'
+		NameChange: 'name-change'
 	}
 } as const;
 
@@ -30,13 +29,6 @@ export type LobbyDetails = {
 export type JoinedLobby = SocketMessage<
 	typeof LobbyTypes.ServerActions.Joined,
 	{
-		lobbyId: string;
-	},
-	typeof Services.Player
->;
-export type GetLobbyResponse = SocketMessage<
-	typeof LobbyTypes.ServerActions.Get,
-	{
 		player: LobbyPlayer;
 		lobby: LobbyDetails;
 	},
@@ -44,7 +36,9 @@ export type GetLobbyResponse = SocketMessage<
 >;
 
 export const isJoinedLobby = (msg: SocketMessage): msg is JoinedLobby => msg.action === LobbyTypes.ServerActions.Joined;
-export const isGetLobbyResponse = (msg: SocketMessage): msg is GetLobbyResponse => msg.action === LobbyTypes.ServerActions.Get;
+export const isGetLobbyResponse = (msg: SocketMessage): msg is JoinedLobby => msg.action === LobbyTypes.ServerActions.Joined;
+export const isNameChange = (msg: SocketMessage): msg is NameChanged => msg.action === LobbyTypes.ServerActions.NameChange;
+export const isPlayerJoined = (msg: SocketMessage): msg is PlayerJoined => msg.action === LobbyTypes.ServerActions.PlayerJoined;
 
 export type CreateLobby = SocketMessage<typeof LobbyTypes.ClientActions.Create, {}, typeof Services.Lobby>;
 
@@ -56,19 +50,27 @@ export type JoinLobby = SocketMessage<
 	typeof Services.Lobby
 >;
 
-export type GetLobby = SocketMessage<
-	typeof LobbyTypes.ClientActions.Get,
-	{
-		lobbyId: string;
-	},
-	typeof Services.Lobby
->;
-
 export type SetName = SocketMessage<
 	typeof LobbyTypes.ClientActions.SetName,
 	{
 		lobbyId: string;
 		text: string;
+	},
+	typeof Services.Lobby
+>;
+
+export type NameChanged = SocketMessage<
+	typeof LobbyTypes.ServerActions.NameChange,
+	{
+		player: LobbyPlayer;
+	},
+	typeof Services.Lobby
+>;
+
+export type PlayerJoined = SocketMessage<
+	typeof LobbyTypes.ServerActions.PlayerJoined,
+	{
+		player: LobbyPlayer;
 	},
 	typeof Services.Lobby
 >;

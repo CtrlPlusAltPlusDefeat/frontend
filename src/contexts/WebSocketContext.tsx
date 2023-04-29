@@ -1,12 +1,12 @@
 import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { isSocketMessage, SocketMessage, unwrapMessage, wrapMessage } from '../types/socket/socket.types';
+import { isError, isSocketMessage, SocketMessage, unwrapMessage, wrapMessage } from '../types/socket/socket.types';
 import { getSessionRequest } from '../stores/player/playerActions';
 import { useSocketRoute } from '../hooks/socketRouter';
 import { devTools } from '../common/devTools';
 
-const socketEndpoint: string = import.meta.env.SOCKET_ENDPOINT ?? 'wss://35hlhhl6z3.execute-api.eu-west-2.amazonaws.com/default';
-const socketRetryTime: number = Number(import.meta.env.SOCKET_RETRY_TIME) ?? 10000;
-
+devTools.log('env', import.meta.env);
+const socketEndpoint: string = import.meta.env.VITE_SOCKET_ENDPOINT ?? 'wss://35hlhhl6z3.execute-api.eu-west-2.amazonaws.com/default';
+const socketRetryTime: number = Number(import.meta.env.VITE_SOCKET_RETRY_TIME) ?? 10000;
 
 interface WebSocketContextObj {
 	isConnected: boolean;
@@ -46,8 +46,13 @@ export const WebsocketProvider = ({ children }: { children: React.ReactNode }) =
 		socket.onmessage = (event) => {
 			const message = unwrapMessage(event.data);
 			devTools.log('onmessage', message);
-			if (isSocketMessage(message)) route(message);
-			else console.error('Unknown socket response:', event.data);
+			if (isSocketMessage(message)) {
+				if (isError(message)) {
+					console.error('Socket error:', message.service, '|', message.action, '.', message.data.error);
+					return;
+				}
+				route(message);
+			} else console.error('Unknown socket response:', event.data);
 		};
 		ws.current = socket;
 	}, [route]);

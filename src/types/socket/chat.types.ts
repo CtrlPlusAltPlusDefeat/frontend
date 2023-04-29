@@ -9,7 +9,7 @@ export type ChatReceived = SocketMessage<
 	typeof ChatTypes.ServerActions.Receive,
 	{
 		text: string;
-		connectionId: string;
+		playerId: string;
 	},
 	typeof Services.Chat
 >;
@@ -17,4 +17,4 @@ export type ChatReceived = SocketMessage<
 export const isChatReceived = (msg: SocketMessage): msg is ChatReceived => msg.action === ChatTypes.ServerActions.Receive;
 
 export type ChatSent = SocketMessage<typeof ChatTypes.ClientActions.Send, ChatSentData, typeof Services.Chat>;
-export type ChatSentData = { text: string };
+export type ChatSentData = { text: string; lobbyId: string };

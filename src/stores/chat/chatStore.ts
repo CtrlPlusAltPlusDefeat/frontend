@@ -25,7 +25,7 @@ export const useChatRoute = () => {
 		(msg: SocketMessage) => {
 			switch (msg.action) {
 				case ChatTypes.ServerActions.Receive:
-					if (isChatReceived(msg)) addMessage({ date: Date.now(), text: msg.data.text, sender: msg.data.connectionId });
+					if (isChatReceived(msg)) addMessage({ date: Date.now(), text: msg.data.text, sender: msg.data.playerId });
 					break;
 				default:
 					console.error('Unknown Chat Action', msg.action);

@@ -1,5 +1,5 @@
 import { useWebsocket } from '../../contexts/WebSocketContext';
-import { CreateLobby, GetLobby, SetName } from '../../types/socket/lobby.types';
+import { CreateLobby, JoinLobby, SetName } from '../../types/socket/lobby.types';
 import { useEffect } from 'react';
 import { useLobbyStore } from './lobbyStore';
 
@@ -23,7 +23,7 @@ export const useGetLobby = (lobbyId?: string) => {
 	useEffect(() => {
 		if (!lobbyId || !isConnected) return;
 
-		const payload: GetLobby = { service: 'lobby', action: 'get', data: { lobbyId } };
+		const payload: JoinLobby = { service: 'lobby', action: 'join', data: { lobbyId } };
 
 		send(payload);
 	}, [send, lobbyId, isConnected]);

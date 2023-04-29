@@ -8,6 +8,7 @@ const PlayerList = () => {
 	return (
 		<div className={'border border-black flex'}>
 			{players?.map((player) => {
+				if (!player.name) return null;
 				return <PlayerListItem key={player.id} photo={''} name={player.name} score={player.points} onClick={() => {}} />;
 			})}
 		</div>

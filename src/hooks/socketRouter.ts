@@ -1,6 +1,6 @@
 import { useChatRoute } from '../stores/chat/chatStore';
 import { usePlayerRoute } from '../stores/player/playerStore';
-import { Services, SocketMessage } from '../types/socket/socket.types';
+import { Services, SocketMessage } from '../types/socket/socket';
 import { useCallback } from 'react';
 import { useLobbyRoute } from '../stores/lobby/lobbyStore';
 

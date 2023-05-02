@@ -1,6 +1,6 @@
 import { useWebsocket } from '../../contexts/WebSocketContext';
-import { ChatSent } from '../../types/socket/chat.types';
 import { useLobbyStore } from '../lobby/lobbyStore';
+import { SendChat } from '../../types/socket/chat/request';
 
 export const useSendMessage = () => {
 	const lobbyId = useLobbyStore((s) => s.lobbyId);
@@ -15,7 +15,7 @@ export const useSendMessage = () => {
 			console.error('Lobby Id is undefined');
 			return;
 		}
-		const payload: ChatSent = { service: 'chat', action: 'send', data: { text: message, lobbyId } };
+		const payload: SendChat = { service: 'chat', action: 'send', data: { text: message, lobbyId } };
 		send(payload);
 	};
 };

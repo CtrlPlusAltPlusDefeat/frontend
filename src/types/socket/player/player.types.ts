@@ -1,4 +1,4 @@
-import { Services, SocketMessage } from './socket.types';
+import { Services, SocketMessage } from '../socket';
 
 export const PlayerTypes = {
 	ClientActions: {

@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { isError, isSocketMessage, SocketMessage, unwrapMessage, wrapMessage } from '../types/socket/socket.types';
+import { isError, isSocketMessage, SocketMessage, unwrapMessage, wrapMessage } from '../types/socket/socket';
 import { getSessionRequest } from '../stores/player/playerActions';
 import { useSocketRoute } from '../hooks/socketRouter';
 import { devTools } from '../common/devTools';

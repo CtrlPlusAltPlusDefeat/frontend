@@ -1,7 +1,8 @@
 import { create } from 'zustand';
-import { SocketMessage } from '../../types/socket/socket.types';
-import { ChatTypes, isChatReceived } from '../../types/socket/chat.types';
+import { SocketMessage } from '../../types/socket/socket';
 import { useCallback } from 'react';
+import { RequestTypes } from '../../types/socket/chat/enum';
+import { isChatReceived } from '../../types/socket/chat/response';
 
 export interface Message {
 	date: number;
@@ -24,7 +25,7 @@ export const useChatRoute = () => {
 	return useCallback(
 		(msg: SocketMessage) => {
 			switch (msg.action) {
-				case ChatTypes.ServerActions.Receive:
+				case RequestTypes.ServerActions.Receive:
 					if (isChatReceived(msg)) addMessage({ date: Date.now(), text: msg.data.text, sender: msg.data.playerId });
 					break;
 				default:

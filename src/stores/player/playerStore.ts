@@ -1,6 +1,6 @@
-import { SocketMessage } from '../../types/socket/socket.types';
+import { SocketMessage } from '../../types/socket/socket';
 import { create } from 'zustand';
-import { isSetSession, PlayerTypes } from '../../types/socket/player.types';
+import { isSetSession, PlayerTypes } from '../../types/socket/player/player.types';
 import { useCallback } from 'react';
 import { devTools } from '../../common/devTools';
 

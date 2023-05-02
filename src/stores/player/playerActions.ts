@@ -1,5 +1,5 @@
-import { CreateSession, UseSession } from '../../types/socket/player.types';
-import { Services } from '../../types/socket/socket.types';
+import { CreateSession, UseSession } from '../../types/socket/player/player.types';
+import { Services } from '../../types/socket/socket';
 import { devTools } from '../../common/devTools';
 
 export const getSessionRequest = () => {

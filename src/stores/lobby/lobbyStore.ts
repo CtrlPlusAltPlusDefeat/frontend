@@ -1,7 +1,7 @@
 import { create } from 'zustand';
-import { SocketMessage } from '../../types/socket/socket.types';
+import { SocketMessage } from '../../types/socket/socket';
 import { useCallback } from 'react';
-import { isGetLobbyResponse, isNameChange, isPlayerJoined, LobbyDetails, LobbyPlayer, LobbyTypes } from '../../types/socket/lobby.types';
+import { isGetLobbyResponse, isNameChange, isPlayerJoined, LobbyDetails, LobbyPlayer, RequestTypes } from '../../types/socket/lobby/request';
 
 interface LobbyStoreState {
 	lobby?: LobbyDetails;
@@ -49,15 +49,15 @@ export const useLobbyRoute = () => {
 	return useCallback(
 		(msg: SocketMessage) => {
 			switch (msg.action) {
-				case LobbyTypes.ServerActions.Joined:
+				case RequestTypes.ServerActions.Joined:
 					console.log(msg.data);
 					if (isGetLobbyResponse(msg)) set({ lobby: msg.data.lobby, player: msg.data.player });
 					break;
-				case LobbyTypes.ServerActions.NameChange:
+				case RequestTypes.ServerActions.NameChange:
 					if (isNameChange(msg)) setPlayer(msg.data.player);
 					break;
 
-				case LobbyTypes.ServerActions.PlayerJoined:
+				case RequestTypes.ServerActions.PlayerJoined:
 					if (isPlayerJoined(msg)) addPlayer(msg.data.player);
 					break;
 

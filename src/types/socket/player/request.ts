@@ -1,5 +1,6 @@
-import { Services, SocketMessage } from '../send';
 import { RequestTypes } from './enum';
+import { SocketMessage } from '../receive';
+import { Services } from '../general';
 
 export type UseSession = SocketMessage<
 	typeof RequestTypes.ClientActions.UseSession,

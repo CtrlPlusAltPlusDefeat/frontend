@@ -1,4 +1,5 @@
-import { Services, SocketMessage } from '../send';
+import { SocketMessage } from '../receive';
+import { Services } from '../general';
 import { RequestTypes } from './enum';
 
 export type SendChat = SocketMessage<

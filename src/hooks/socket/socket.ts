@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-const socketEndpoint: string = import.meta.env.VITE_SOCKET_ENDPOINT ?? 'wss://35hlhhl6z3.execute-api.eu-west-2.amazonaws.com/default';
-const socketRetryTime: number = Number(import.meta.env.VITE_SOCKET_RETRY_TIME) ?? 10000;
+const socketEndpoint: string = import.meta.env.VITE_SOCKET_ENDPOINT ?? 'localhost:8080';
+const socketRetryTime: number = Number(import.meta.env.VITE_SOCKET_RETRY_TIME) ?? 1000;
 
 interface ConnectionHandlers {
 	onMessage?: (msg: string) => void;

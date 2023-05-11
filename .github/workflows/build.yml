@@ -1,31 +1,33 @@
 name: Build
 
 on:
- pull_request:
-  branches:
-   - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
- build:
-  runs-on: ubuntu-latest
-  steps:
-   - name: Clone repository
-     uses: actions/checkout@v2
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
 
-   - uses: actions/setup-node@v3
-     with:
-      node-version: 19
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 19
 
-   - name: Install dependencies
-     run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-   - name: Generate build
-     env:
-      CI: false
-     run: npm run build
+      - name: Generate build
+        env:
+          CI: false
+          VITE_SOCKET_ENDPOINT: wss://35hlhhl6z3.execute-api.eu-west-2.amazonaws.com/default
+          VITE_SOCKET_RETRY_TIME: 10000
+        run: npm run build
 
-   - name: Upload Build
-     uses: actions/upload-artifact@v1
-     with:
-      name: build
-      path: dist
+      - name: Upload Build
+        uses: actions/upload-artifact@v1
+        with:
+          name: build
+          path: dist

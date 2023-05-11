@@ -1,9 +1,7 @@
-import React, { createContext, useContext, useEffect, useRef } from 'react';
+import React, { createContext, useContext } from 'react';
 import { SocketMessage } from '../types/socket/receive';
 import { useRoute } from '../hooks/socket/route';
-import { useSend } from '../hooks/socket/send';
 import { useSocket } from '../hooks/socket/socket';
-import { getSessionRequest } from '../stores/player/playerActions';
 
 interface WebSocketContextObj {
 	isConnected: boolean;
@@ -16,25 +14,13 @@ const WebsocketContext = createContext<WebSocketContextObj>({
 });
 
 export const WebsocketProvider = ({ children }: { children: React.ReactNode }) => {
-	const ws = useRef<WebSocket | null>(null);
 	const router = useRoute();
-	const send = useSend(ws.current);
-	const { socket, isConnected } = useSocket({
-		onConnect: () => {
-			send(getSessionRequest());
-		},
-		onMessage: router
-	});
-
-	useEffect(() => {
-		ws.current = socket;
-	}, [socket]);
-
+	const { isConnected } = useSocket(router);
 	return (
 		<WebsocketContext.Provider
 			value={{
 				isConnected,
-				send
+				send: () => {}
 			}}
 		>
 			{children}

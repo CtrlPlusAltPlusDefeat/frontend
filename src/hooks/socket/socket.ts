@@ -17,7 +17,6 @@ const useConnectToSocket = (onConnect: StateChangeHandler, onDisconnect: StateCh
 				onConnect();
 			};
 			socket.onclose = () => {
-				console.log('close');
 				onDisconnect();
 			};
 			socket.onmessage = (event) => {

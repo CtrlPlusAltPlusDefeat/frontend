@@ -1,7 +1,5 @@
 import { create } from 'zustand';
-import { SocketMessage } from '../../types/socket/socket';
-import { useCallback } from 'react';
-import { isGetLobbyResponse, isNameChange, isPlayerJoined, LobbyDetails, LobbyPlayer, RequestTypes } from '../../types/socket/lobby/request';
+import { LobbyDetails, LobbyPlayer } from '../../types/socket/lobby/types';
 
 interface LobbyStoreState {
 	lobby?: LobbyDetails;
@@ -41,30 +39,3 @@ export const useLobbyStore = create<LobbyStoreState>()((set) => ({
 			return { lobby: { ...state.lobby, players } };
 		})
 }));
-
-export const useLobbyRoute = () => {
-	const set = useLobbyStore((s) => s.set);
-	const setPlayer = useLobbyStore((s) => s.setPlayer);
-	const addPlayer = useLobbyStore((s) => s.addPlayer);
-	return useCallback(
-		(msg: SocketMessage) => {
-			switch (msg.action) {
-				case RequestTypes.ServerActions.Joined:
-					console.log(msg.data);
-					if (isGetLobbyResponse(msg)) set({ lobby: msg.data.lobby, player: msg.data.player });
-					break;
-				case RequestTypes.ServerActions.NameChange:
-					if (isNameChange(msg)) setPlayer(msg.data.player);
-					break;
-
-				case RequestTypes.ServerActions.PlayerJoined:
-					if (isPlayerJoined(msg)) addPlayer(msg.data.player);
-					break;
-
-				default:
-					console.error('Unknown Lobby Action', msg.action);
-			}
-		},
-		[addPlayer, set, setPlayer]
-	);
-};

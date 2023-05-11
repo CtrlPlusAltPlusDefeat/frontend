@@ -1,12 +1,9 @@
-import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { isError, isSocketMessage, SocketMessage, unwrapMessage, wrapMessage } from '../types/socket/socket';
+import React, { createContext, useContext, useEffect, useRef } from 'react';
+import { SocketMessage } from '../types/socket/receive';
+import { useRoute } from '../hooks/socket/route';
+import { useSend } from '../hooks/socket/send';
+import { useSocket } from '../hooks/socket/socket';
 import { getSessionRequest } from '../stores/player/playerActions';
-import { useSocketRoute } from '../hooks/socketRouter';
-import { devTools } from '../common/devTools';
-
-devTools.log('env', import.meta.env);
-const socketEndpoint: string = import.meta.env.VITE_SOCKET_ENDPOINT ?? 'wss://35hlhhl6z3.execute-api.eu-west-2.amazonaws.com/default';
-const socketRetryTime: number = Number(import.meta.env.VITE_SOCKET_RETRY_TIME) ?? 10000;
 
 interface WebSocketContextObj {
 	isConnected: boolean;
@@ -19,54 +16,19 @@ const WebsocketContext = createContext<WebSocketContextObj>({
 });
 
 export const WebsocketProvider = ({ children }: { children: React.ReactNode }) => {
-	const [isConnected, setIsConnected] = useState(false);
-
 	const ws = useRef<WebSocket | null>(null);
-	const send = (msg: SocketMessage) => {
-		if (!ws.current) {
-			console.error('Not connected to socket, cannot send data');
-			return;
-		}
-		ws.current.send(wrapMessage(msg));
-	};
-
-	const route = useSocketRoute();
-
-	const connectToSocket = useCallback(() => {
-		if (ws.current) return;
-		const socket = new WebSocket(socketEndpoint);
-		socket.onopen = () => {
-			setIsConnected(true);
+	const router = useRoute();
+	const send = useSend(ws.current);
+	const { socket, isConnected } = useSocket({
+		onConnect: () => {
 			send(getSessionRequest());
-		};
-		socket.onclose = () => {
-			setIsConnected(false);
-			ws.current = null;
-		};
-		socket.onmessage = (event) => {
-			const message = unwrapMessage(event.data);
-			devTools.log('onmessage', message);
-			if (isSocketMessage(message)) {
-				if (isError(message)) {
-					console.error('Socket error:', message.service, '|', message.action, '.', message.data.error);
-					return;
-				}
-				route(message);
-			} else console.error('Unknown socket response:', event.data);
-		};
-		ws.current = socket;
-	}, [route]);
+		},
+		onMessage: router
+	});
 
 	useEffect(() => {
-		const interval = setInterval(() => {
-			connectToSocket();
-		}, socketRetryTime);
-
-		return () => {
-			clearInterval(interval);
-			ws.current?.close();
-		};
-	}, [connectToSocket, route]);
+		ws.current = socket;
+	}, [socket]);
 
 	return (
 		<WebsocketContext.Provider

@@ -1,6 +1,7 @@
-import { Services, SocketMessage } from '../socket';
 import { LobbyDetails, LobbyPlayer } from './types';
 import { RequestTypes } from './enum';
+import { Services } from '../general';
+import { SocketMessage } from '../receive';
 
 export type NameChanged = SocketMessage<
 	typeof RequestTypes.ServerActions.NameChange,

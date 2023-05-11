@@ -1,6 +1,6 @@
-import { CreateSession, UseSession } from '../../types/socket/player.types';
-import { Services } from '../../types/socket/socket.types';
 import { devTools } from '../../common/devTools';
+import { Services } from '../../types/socket/general';
+import { CreateSession, UseSession } from '../../types/socket/player/request';
 
 export const getSessionRequest = () => {
 	const sessionId = sessionStorage.getItem('session-id');

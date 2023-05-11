@@ -1,5 +1,5 @@
 import { useWebsocket } from '../../contexts/WebSocketContext';
-import { CreateLobby, JoinLobby, SetName } from '../../types/socket/lobby.types';
+import { CreateLobby, JoinLobby, SetName } from '../../types/socket/lobby/request';
 import { useEffect } from 'react';
 import { useLobbyStore } from './lobbyStore';
 

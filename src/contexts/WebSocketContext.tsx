@@ -15,12 +15,12 @@ const WebsocketContext = createContext<WebSocketContextObj>({
 
 export const WebsocketProvider = ({ children }: { children: React.ReactNode }) => {
 	const router = useRoute();
-	const { isConnected } = useSocket(router);
+	const { isConnected, send } = useSocket(router);
 	return (
 		<WebsocketContext.Provider
 			value={{
 				isConnected,
-				send: () => {}
+				send
 			}}
 		>
 			{children}

@@ -52,6 +52,8 @@ export const useSocket = (onMessage?: MessageHandler) => {
 
 	//connect to socket on interval
 	useEffect(() => {
+		ws.current = connectToSocket(ws.current) ?? null;
+
 		const interval = setInterval(() => {
 			const socket = connectToSocket(ws.current);
 			if (socket) {

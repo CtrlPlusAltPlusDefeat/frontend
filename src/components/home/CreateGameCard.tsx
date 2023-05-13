@@ -6,7 +6,7 @@ import { useCreateLobby } from '../../stores/lobby/lobbyActions';
 
 const CreateGameCard = () => {
 	const create = useCreateLobby();
-	const open = useSetNameModal(create);
+	const open = useSetNameModal();
 
 	return (
 		<div className={'border rounded border-black p-4'}>
@@ -16,7 +16,7 @@ const CreateGameCard = () => {
 					classes={['mt-4']}
 					text={'Create'}
 					onClick={() => {
-						open();
+						open(create);
 					}}
 				/>
 			</div>

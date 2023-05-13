@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
 import { useWebsocket } from '../../contexts/WebSocketContext';
 import { CreateLobby, JoinLobby } from '../../types/socket/lobby/request';
+import { useCallback } from 'react';
 
 export const useCreateLobby = () => {
 	const { send } = useWebsocket();
@@ -16,11 +16,14 @@ export const useCreateLobby = () => {
 	};
 };
 
-export const useJoinLobby = (name: string, lobbyId?: string) => {
+export const useJoinLobby = (lobbyId?: string) => {
 	const { send, isConnected } = useWebsocket();
-	useEffect(() => {
-		if (!lobbyId || !isConnected) return;
-		const payload: JoinLobby = { service: 'lobby', action: 'join', data: { lobbyId, name } };
-		send(payload);
-	}, [send, lobbyId, isConnected, name]);
+	return useCallback(
+		(name: string) => {
+			if (!lobbyId || !isConnected) return;
+			const payload: JoinLobby = { service: 'lobby', action: 'join', data: { lobbyId, name } };
+			send(payload);
+		},
+		[isConnected, lobbyId, send]
+	);
 };

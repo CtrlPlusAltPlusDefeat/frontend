@@ -26,7 +26,8 @@ interface SetNameProps {
 
 export const SetName = ({ onSubmit }: SetNameProps) => {
 	const {
-		state: { buttonRef }
+		state: { buttonRef },
+		setClose
 	} = useModal();
 	const [button, setButton] = useState(buttonRef.current);
 	useEffect(() => {
@@ -38,6 +39,7 @@ export const SetName = ({ onSubmit }: SetNameProps) => {
 			rows={rows}
 			onSubmit={(values, helpers) => {
 				onSubmit(values.name);
+				setClose();
 				helpers.resetForm({ values: { text: '' } });
 			}}
 			externalButton={button ? button : undefined}

@@ -1,13 +1,10 @@
-import PlayerList from '../../components/lobby/PlayerList/PlayerList';
-import ChatBox from '../../components/common/ChatBox/ChatBox';
+import { LeftPanel, RightPanel } from './LobbyLayout';
 
 const Lobby = () => {
 	return (
-		<div>
-			Lobby Page
-			<PlayerList />
-			<br />
-			<ChatBox />
+		<div className={'flex h-fit flex-wrap'}>
+			<LeftPanel />
+			<RightPanel />
 		</div>
 	);
 };

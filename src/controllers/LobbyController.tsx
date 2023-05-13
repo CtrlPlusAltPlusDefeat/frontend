@@ -1,18 +1,12 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
 import Lobby from '../pages/Lobby/Lobby';
-import { useJoinLobby } from '../stores/lobby/lobbyActions';
-import { useSetNameModal } from '../components/common/Modal/Modals/SetName';
+import { useLoadLobby } from '../hooks/loadLobby/loadLobby';
 
 const LobbyController = () => {
-	const lobbyId = useParams().lobbyId;
-	const [playerName] = React.useState<string | null>(sessionStorage.getItem(`session-player-name-${lobbyId}`));
-	const join = useJoinLobby(lobbyId);
-	const openModal = useSetNameModal(join);
+	const status = useLoadLobby();
 
-	if (!lobbyId) return <div>Lobby Not Found</div>;
-	else if (playerName) join(playerName);
-	else openModal();
+	if (status === 'not-found') return <div>Lobby not found...</div>;
+	else if (status === 'joining') return <div>Joining...</div>;
 
 	return <Lobby />;
 };

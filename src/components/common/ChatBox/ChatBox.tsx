@@ -27,18 +27,18 @@ const ChatBox = () => {
 	const messages = useChatStore((s) => s.messages);
 	const send = useSendMessage();
 	return (
-		<>
-			<div className="w-full h-3/4 bg-slate-100 border border-solid border-slate rounded mb-2">
-				<ul className="chat h-full overflow-auto	">
-					{messages.map((message) => {
+		<div className="h-full bg-white rounded p-1">
+			<div className="w-full h-4/5 bg-slate-100 border border-solid border-slate rounded mb-2">
+				<ul className="chat h-full overflow-auto pl-2 divide-y	">
+					{messages.map((message, i) => {
 						const player = players?.find((player) => player.id === message.sender);
 
 						return (
-							<li>
-								<div className={''}>{moment(message.date).format('hh:mm')}</div>
-								<div>
-									{player?.name}: {message.text}
+							<li key={i} className={' py-2'}>
+								<div className={'inline pr-3 text-slate-600'}>
+									{moment(message.date).format('hh:mm')} {player?.name}
 								</div>
+								<div className={'inline'}>{message.text}</div>
 							</li>
 						);
 					})}
@@ -53,7 +53,7 @@ const ChatBox = () => {
 				}}
 				submitButton={{ text: 'send', color: 'success' }}
 			/>
-		</>
+		</div>
 	);
 };
 

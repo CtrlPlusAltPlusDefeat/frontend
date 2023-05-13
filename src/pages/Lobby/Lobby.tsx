@@ -2,10 +2,12 @@ import { LeftPanel, RightPanel } from './LobbyLayout';
 
 const Lobby = () => {
 	return (
-		<div className={'flex h-fit flex-wrap'}>
-			<LeftPanel />
-			<RightPanel />
-		</div>
+		<>
+			<div className={'flex h-fit flex-wrap'}>
+				<LeftPanel />
+				<RightPanel />
+			</div>
+		</>
 	);
 };
 

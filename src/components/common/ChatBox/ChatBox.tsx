@@ -28,7 +28,7 @@ const ChatBox = () => {
 	const send = useSendMessage();
 	return (
 		<div className="h-full bg-white rounded p-1">
-			<div className="w-full h-4/5 bg-slate-100 border border-solid border-slate rounded mb-2">
+			<div className="w-full h-4/6 bg-slate-100 border border-solid border-slate rounded mb-2">
 				<ul className="chat h-full overflow-auto pl-2 divide-y	">
 					{messages.map((message, i) => {
 						const player = players?.find((player) => player.id === message.sender);
@@ -51,7 +51,6 @@ const ChatBox = () => {
 					send(values.text);
 					helpers.resetForm({ values: { text: '' } });
 				}}
-				submitButton={{ text: 'send', color: 'success' }}
 			/>
 		</div>
 	);

@@ -6,7 +6,7 @@ import { RequestTypes as ChatRequest } from '../types/socket/chat/enum';
 import { Services } from '../types/socket/general';
 import { SocketMessage } from '../types/socket/receive';
 import { useSetSession } from '../stores/player/playerHandlers';
-import { useJoinedLobby, useNameChanged, usePlayerJoined } from '../stores/lobby/lobbyHandlers';
+import { useJoinedLobby, usePlayerJoined, usePlayerLeft } from '../stores/lobby/lobbyHandlers';
 import { useReceivedMessage } from '../stores/chat/chatHandlers';
 
 export type RouterHandler = (payload: SocketMessage) => void;
@@ -25,8 +25,8 @@ const add = (routes: RoutesMap, [route, handler, middleware]: AddProps) => {
 export const useConfigureMiddleware = () => {
 	const setSession = useSetSession();
 	const joinedLobby = useJoinedLobby();
-	const nameChanged = useNameChanged();
 	const playerJoined = usePlayerJoined();
+	const playerLeft = usePlayerLeft();
 	const receivedMessage = useReceivedMessage();
 
 	return useCallback(() => {
@@ -41,8 +41,8 @@ export const useConfigureMiddleware = () => {
 		//Lobby
 		add(routes, [`${Services.Lobby}|${LobbyRequest.ServerActions.Joined}`, joinedLobby, []]);
 		add(routes, [`${Services.Lobby}|${LobbyRequest.ServerActions.PlayerJoined}`, playerJoined, []]);
-		add(routes, [`${Services.Lobby}|${LobbyRequest.ServerActions.NameChange}`, nameChanged, []]);
+		add(routes, [`${Services.Lobby}|${LobbyRequest.ServerActions.PlayerLeft}`, playerLeft, []]);
 
 		return routes;
-	}, [joinedLobby, nameChanged, playerJoined, receivedMessage, setSession]);
+	}, [joinedLobby, playerJoined, playerLeft, receivedMessage, setSession]);
 };

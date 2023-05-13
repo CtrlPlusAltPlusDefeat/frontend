@@ -3,6 +3,7 @@ export type LobbyPlayer = {
 	name: string;
 	isAdmin: boolean;
 	points: number;
+	isOnline: boolean;
 };
 
 export type LobbyDetails = {

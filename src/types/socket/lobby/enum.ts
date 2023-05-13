@@ -1,6 +1,7 @@
 export const RequestTypes = {
 	ClientActions: {
 		Join: 'join',
+		Leave: 'leave',
 		Create: 'create',
 		SetName: 'set-name'
 	},

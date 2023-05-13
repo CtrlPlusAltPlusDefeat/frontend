@@ -3,15 +3,15 @@ import { RequestTypes } from './enum';
 import { Services } from '../general';
 import { SocketMessage } from '../receive';
 
-export type NameChanged = SocketMessage<
-	typeof RequestTypes.ServerActions.NameChange,
+export type PlayerJoined = SocketMessage<
+	typeof RequestTypes.ServerActions.PlayerJoined,
 	{
 		player: LobbyPlayer;
 	},
 	typeof Services.Lobby
 >;
 
-export type PlayerJoined = SocketMessage<
+export type PlayerLeft = SocketMessage<
 	typeof RequestTypes.ServerActions.PlayerJoined,
 	{
 		player: LobbyPlayer;
@@ -29,5 +29,5 @@ export type JoinedLobby = SocketMessage<
 >;
 
 export const isJoinedLobby = (msg: SocketMessage): msg is JoinedLobby => msg.action === RequestTypes.ServerActions.Joined;
-export const isNameChange = (msg: SocketMessage): msg is NameChanged => msg.action === RequestTypes.ServerActions.NameChange;
 export const isPlayerJoined = (msg: SocketMessage): msg is PlayerJoined => msg.action === RequestTypes.ServerActions.PlayerJoined;
+export const isPlayerLeft = (msg: SocketMessage): msg is PlayerLeft => msg.action === RequestTypes.ServerActions.PlayerLeft;

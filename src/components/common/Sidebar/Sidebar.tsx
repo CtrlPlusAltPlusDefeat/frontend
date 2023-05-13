@@ -6,7 +6,7 @@ interface SidebarProps {
 
 // css for anything not a phone :D
 const normalScreenBackdrop = 'md:hidden';
-const normalScreen = 'md:w-[35vw]  md:bg-white md:opacity-100 md:p-0 md:pl-0 fixed md:block md:h-auto md:z-[1]';
+const normalScreen = 'md:w-[35vw] md:relative md:bg-white md:opacity-100 md:p-0 md:pl-0 md:block md:h-auto md:z-[1]';
 
 const Sidebar = ({ children }: SidebarProps) => {
 	const [showSidebar, setShowSidebar] = useState(true);

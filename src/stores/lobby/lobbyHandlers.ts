@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { SocketMessage } from '../../types/socket/receive';
-import { isJoinedLobby, isNameChange, isPlayerJoined } from '../../types/socket/lobby/response';
+import { isJoinedLobby, isPlayerJoined, isPlayerLeft } from '../../types/socket/lobby/response';
 import { useLobbyStore } from './lobbyStore';
 
 export const useJoinedLobby = () => {
@@ -13,22 +13,22 @@ export const useJoinedLobby = () => {
 	);
 };
 
-export const useNameChanged = () => {
-	const setPlayer = useLobbyStore((s) => s.setPlayer);
+export const usePlayerJoined = () => {
+	const upsertPlayer = useLobbyStore((s) => s.upsertPlayer);
 	return useCallback(
 		(payload: SocketMessage) => {
-			if (isNameChange(payload)) setPlayer(payload.data.player);
+			if (isPlayerJoined(payload)) upsertPlayer(payload.data.player);
 		},
-		[setPlayer]
+		[upsertPlayer]
 	);
 };
 
-export const usePlayerJoined = () => {
-	const addPlayer = useLobbyStore((s) => s.addPlayer);
+export const usePlayerLeft = () => {
+	const upsertPlayer = useLobbyStore((s) => s.upsertPlayer);
 	return useCallback(
 		(payload: SocketMessage) => {
-			if (isPlayerJoined(payload)) addPlayer(payload.data.player);
+			if (isPlayerLeft(payload)) upsertPlayer(payload.data.player);
 		},
-		[addPlayer]
+		[upsertPlayer]
 	);
 };

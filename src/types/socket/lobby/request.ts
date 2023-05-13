@@ -18,3 +18,11 @@ export type JoinLobby = SocketMessage<
 	},
 	typeof Services.Lobby
 >;
+
+export type LeaveLobby = SocketMessage<
+	typeof RequestTypes.ClientActions.Leave,
+	{
+		lobbyId: string;
+	},
+	typeof Services.Lobby
+>;

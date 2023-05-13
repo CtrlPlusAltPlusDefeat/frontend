@@ -17,8 +17,7 @@ export const Default: Story = {
 	args: {
 		onClick: () => {},
 		name: 'Username',
-		score: 0,
-		photo: ''
+		points: 0
 	},
 	render: (args) => {
 		return <PlayerListItem {...args} />;

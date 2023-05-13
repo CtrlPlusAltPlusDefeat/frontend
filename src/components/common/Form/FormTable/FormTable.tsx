@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { z } from 'zod';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { FormikHelpers } from 'formik/dist/types';
@@ -23,11 +23,12 @@ export interface FormTableProps<Schema extends z.ZodType<unknown>> {
 	children?: React.ReactNode;
 	rows: Row<Schema>[];
 	onSubmit: (values: SchemaRecord<Schema>, helpers: FormikHelpers<Record<string, unknown>>) => void | Promise<unknown>;
-	submitButton: SubmitButtonProps;
+	submitButton?: SubmitButtonProps;
 	animation?: AnimationControls | TargetAndTransition | VariantLabels | boolean;
+	externalButton?: HTMLButtonElement;
 }
 
-const FormTable = <Schema extends z.ZodType<unknown>>({ schema, rows, children, onSubmit, animation, submitButton }: FormTableProps<Schema>) => {
+const FormTable = <Schema extends z.ZodType<unknown>>({ schema, rows, children, onSubmit, animation, submitButton, externalButton }: FormTableProps<Schema>) => {
 	const defaultValues: Record<string, unknown> = {};
 	rows.forEach((row) =>
 		row.fields.forEach((input) => {
@@ -45,6 +46,17 @@ const FormTable = <Schema extends z.ZodType<unknown>>({ schema, rows, children, 
 		}
 	});
 
+	const externalButtonHandler = useCallback(() => {
+		formik.submitForm().catch(console.error);
+	}, [formik]);
+
+	useEffect(() => {
+		externalButton?.addEventListener('click', externalButtonHandler);
+		return () => {
+			externalButton?.removeEventListener('click', externalButtonHandler);
+		};
+	}, [externalButton, externalButtonHandler]);
+
 	const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
 
 	return (
@@ -60,7 +72,8 @@ const FormTable = <Schema extends z.ZodType<unknown>>({ schema, rows, children, 
 					<motion.div className="flex gap-3 flex-col" initial={{ opacity: 0, y: 40 }} animate={animation ?? defaultAnimation}>
 						{getFields({ rows, getFieldProps, errors, touched })}
 						{children}
-						<ActionButton classes={['w-full']} type="submit" state="success" text={isSubmitting ? 'loading...' : submitButton.text} />
+
+						{submitButton && <ActionButton classes={['w-full']} type="submit" state="success" text={isSubmitting ? 'loading...' : submitButton.text} />}
 					</motion.div>
 				</motion.div>
 			</Form>

@@ -1,14 +1,17 @@
+import React from 'react';
+
 export type ActionButtonState = 'success' | 'danger' | 'loading';
 
-interface ActionButtonProps {
+export interface ActionButtonProps {
 	text: string;
 	onClick?: () => void;
 	state?: ActionButtonState;
 	type?: 'submit' | 'reset' | 'button' | undefined;
 	classes?: string[];
+	buttonRef?: React.RefObject<HTMLButtonElement>;
 }
 
-const ActionButton = ({ text, onClick, state, type, classes }: ActionButtonProps) => {
+const ActionButton = ({ text, onClick, state, type, classes, buttonRef }: ActionButtonProps) => {
 	const classNames: string[] = [...(classes ?? [])];
 	switch (state) {
 		case 'danger':
@@ -25,7 +28,7 @@ const ActionButton = ({ text, onClick, state, type, classes }: ActionButtonProps
 	}
 
 	return (
-		<button type={type} className={`py-2 px-3 rounded shadow shadow-slate-500 ${classNames.join(' ')}`} onClick={onClick}>
+		<button ref={buttonRef} type={type} className={`py-2 px-3 rounded shadow shadow-slate-500 ${classNames.join(' ')}`} onClick={onClick}>
 			{text}
 		</button>
 	);

@@ -5,6 +5,7 @@ import './index.css';
 import HomeController from './controllers/HomeController';
 import LobbyController from './controllers/LobbyController';
 import { WebsocketProvider } from './contexts/WebSocketContext';
+import { ModalProvider } from './components/common/Modal/ModalContext';
 //import ActionButton from './components/common/ActionButton/ActionButton';
 
 const router = createBrowserRouter([
@@ -22,7 +23,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<WebsocketProvider>
 		<React.StrictMode>
-			<RouterProvider router={router} fallbackElement={<div>Loading...</div>} />
+			<ModalProvider>
+				<RouterProvider router={router} fallbackElement={<div>Loading...</div>} />
+			</ModalProvider>
 		</React.StrictMode>
 	</WebsocketProvider>
 );

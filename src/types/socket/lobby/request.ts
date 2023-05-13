@@ -2,21 +2,19 @@ import { SocketMessage } from '../receive';
 import { Services } from '../general';
 import { RequestTypes } from './enum';
 
-export type CreateLobby = SocketMessage<typeof RequestTypes.ClientActions.Create, {}, typeof Services.Lobby>;
+export type CreateLobby = SocketMessage<
+	typeof RequestTypes.ClientActions.Create,
+	{
+		name: string;
+	},
+	typeof Services.Lobby
+>;
 
 export type JoinLobby = SocketMessage<
 	typeof RequestTypes.ClientActions.Join,
 	{
 		lobbyId: string;
-	},
-	typeof Services.Lobby
->;
-
-export type SetName = SocketMessage<
-	typeof RequestTypes.ClientActions.SetName,
-	{
-		lobbyId: string;
-		text: string;
+		name: string;
 	},
 	typeof Services.Lobby
 >;

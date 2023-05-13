@@ -1,9 +1,12 @@
 import ActionButton from '../common/ActionButton/ActionButton';
-import { useCreateLobby } from '../../stores/lobby/lobbyActions';
 import CardTitle from './CardTitle';
+
+import { useSetNameModal } from '../common/Modal/Modals/SetName';
+import { useCreateLobby } from '../../stores/lobby/lobbyActions';
 
 const CreateGameCard = () => {
 	const create = useCreateLobby();
+	const open = useSetNameModal(create);
 
 	return (
 		<div className={'border rounded border-black p-4'}>
@@ -13,7 +16,7 @@ const CreateGameCard = () => {
 					classes={['mt-4']}
 					text={'Create'}
 					onClick={() => {
-						create();
+						open();
 					}}
 				/>
 			</div>

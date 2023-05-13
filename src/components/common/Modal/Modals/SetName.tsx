@@ -4,10 +4,6 @@ import { useCallback } from 'react';
 
 export const useSetNameModal = () => {
 	const { setOpen } = useModal();
-	//const create = useCreateLobby();
-
-	//create();
-
 	return useCallback(
 		(onSubmit: (name: string) => void) =>
 			setOpen({

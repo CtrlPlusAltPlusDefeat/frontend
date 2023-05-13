@@ -38,7 +38,6 @@ export type UseModalState = [ModalState, ModalDispatches];
 export const useModalState = (): [ModalState, ModalDispatches] => {
 	const buttonRef = useRef<HTMLButtonElement>(null);
 	const [state, dispatch] = useReducer(reducer, { isOpen: false, title: undefined, body: undefined, buttonRef });
-
 	const setOpen: ModalDispatches['setOpen'] = useCallback((content) => dispatch({ type: 'open', content }), []);
 	const setClose: ModalDispatches['setClose'] = () => dispatch({ type: 'close' });
 

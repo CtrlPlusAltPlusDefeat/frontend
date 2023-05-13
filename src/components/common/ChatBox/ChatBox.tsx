@@ -4,6 +4,7 @@ import { Row } from '../Form/types';
 import { useChatStore } from '../../../stores/chat/chatStore';
 import { useSendMessage } from '../../../stores/chat/chatActions';
 import { useLobbyStore } from '../../../stores/lobby/lobbyStore';
+import moment from 'moment';
 
 const schema = z.object({ text: z.string() });
 const rows: Row<typeof schema>[] = [
@@ -27,19 +28,21 @@ const ChatBox = () => {
 	const send = useSendMessage();
 	return (
 		<>
-			<div className="w-80 h-80 bg-slate-500 ">
-				<div className="chat h-full">
+			<div className="w-full h-3/4 bg-slate-100 border border-solid border-slate rounded mb-2">
+				<ul className="chat h-full overflow-auto	">
 					{messages.map((message) => {
 						const player = players?.find((player) => player.id === message.sender);
-						const date = new Date(message.date).toTimeString();
 
 						return (
 							<li>
-								{date.split(' ')[0]} {player?.name}: {message.text}
+								<div className={''}>{moment(message.date).format('hh:mm')}</div>
+								<div>
+									{player?.name}: {message.text}
+								</div>
 							</li>
 						);
 					})}
-				</div>
+				</ul>
 			</div>
 			<FormTable
 				schema={schema}

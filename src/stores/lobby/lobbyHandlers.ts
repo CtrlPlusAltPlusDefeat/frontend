@@ -4,12 +4,12 @@ import { isJoinedLobby, isNameChange, isPlayerJoined } from '../../types/socket/
 import { useLobbyStore } from './lobbyStore';
 
 export const useJoinedLobby = () => {
-	const set = useLobbyStore((s) => s.set);
+	const setStore = useLobbyStore((s) => s.setStore);
 	return useCallback(
 		(payload: SocketMessage) => {
-			if (isJoinedLobby(payload)) set({ lobby: payload.data.lobby, player: payload.data.player });
+			if (isJoinedLobby(payload)) setStore({ lobby: payload.data.lobby, player: payload.data.player });
 		},
-		[set]
+		[setStore]
 	);
 };
 

@@ -1,4 +1,4 @@
-import React, { useReducer, useRef } from 'react';
+import React, { useCallback, useReducer, useRef } from 'react';
 import { ActionButtonProps } from '../ActionButton/ActionButton';
 
 interface ModalContent {
@@ -39,7 +39,7 @@ export const useModalState = (): [ModalState, ModalDispatches] => {
 	const buttonRef = useRef<HTMLButtonElement>(null);
 	const [state, dispatch] = useReducer(reducer, { isOpen: false, title: undefined, body: undefined, buttonRef });
 
-	const setOpen: ModalDispatches['setOpen'] = (content) => dispatch({ type: 'open', content });
+	const setOpen: ModalDispatches['setOpen'] = useCallback((content) => dispatch({ type: 'open', content }), []);
 	const setClose: ModalDispatches['setClose'] = () => dispatch({ type: 'close' });
 
 	return [state, { setOpen, setClose }];

@@ -18,6 +18,7 @@ export const useCreateLobby = () => {
 
 export const useJoinLobby = (lobbyId?: string) => {
 	const { send, isConnected } = useWebsocket();
+
 	return useCallback(
 		(name: string) => {
 			if (!lobbyId || !isConnected) return;

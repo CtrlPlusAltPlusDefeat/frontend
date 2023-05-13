@@ -5,3 +5,5 @@ export const devTools = {
 		console.log(message, params);
 	}
 };
+
+export const debugBorder = 'border border-solid border-black';

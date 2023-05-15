@@ -7,7 +7,8 @@ import { useChatStore } from '../../../stores/chat/chatStore';
 import { useLoadMessages, useSendMessage } from '../../../stores/chat/chatActions';
 import { useLobbyStore } from '../../../stores/lobby/lobbyStore';
 import { getVerticalScrollPercentage, useOnScroll, useOnScrollEnd } from '../../../hooks/elementScroll';
-import { devTools } from '../../../common/devTools';
+import { ChatMessage } from './ChatMessage';
+import { ChatDateLabel } from './ChatDateLabel';
 
 const schema = z.object({ text: z.string() });
 const rows: Row<typeof schema>[] = [
@@ -26,8 +27,8 @@ const rows: Row<typeof schema>[] = [
 ];
 
 const ChatBox = () => {
-	const loadMessages = useLoadMessages();
 	const players = useLobbyStore((s) => s.lobby?.players);
+	const loadMessages = useLoadMessages();
 	const messages = useChatStore((s) => s.messages);
 	const canLoadMessages = useChatStore((s) => !s.loadedHistoric && !s.isLoading);
 	const chatBoxRef = useRef<HTMLUListElement>(null);
@@ -36,8 +37,6 @@ const ChatBox = () => {
 	useOnScrollEnd(chatBoxRef, (ele) => {
 		ele.scrollTop = ele.scrollHeight;
 	});
-
-	devTools.log('messages', messages.length);
 
 	useOnScroll(chatBoxRef, (e: HTMLElement) => {
 		if (messages.length === 0 || !canLoadMessages) return;
@@ -51,15 +50,18 @@ const ChatBox = () => {
 	return (
 		<div className="h-full bg-white rounded p-1">
 			<div className="w-full h-4/6 bg-slate-100 border border-solid border-slate rounded mb-2">
-				<ul ref={chatBoxRef} className="chat h-full overflow-auto pl-2 divide-y	">
+				<ul ref={chatBoxRef} className="chat h-full overflow-auto px-2 divide-y	">
 					{messages.map((message, i) => {
 						const player = players?.find((player) => player.id === message.playerId);
+						if (!player) return null;
+						const momentTime = moment.unix(message.timestamp);
+						const date = momentTime.format('DD/MM/YYYY');
+						const prevDate = messages[i - 1] ? moment.unix(messages[i - 1].timestamp).format('DD/MM/YYYY') : undefined;
+						const dateLabel = prevDate !== date ? <ChatDateLabel date={date} /> : null;
 						return (
-							<li key={i} className={' py-2'}>
-								<div className={'inline pr-3 text-slate-600'}>
-									{moment(message.timestamp).format('hh:mm')} {player?.name}
-								</div>
-								<div className={'inline'}>{message.text}</div>
+							<li key={i} className={'py-1 group'}>
+								{dateLabel}
+								<ChatMessage text={message.text} planerName={player.name} time={momentTime.format('hh:mm')} />
 							</li>
 						);
 					})}

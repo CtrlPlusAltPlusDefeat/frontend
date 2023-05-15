@@ -1,6 +1,6 @@
-import { useWebsocket } from '../../contexts/WebSocketContext';
-import JoinGameCard from '../../components/home/JoinGameCard';
-import CreateGameCard from '../../components/home/CreateGameCard';
+import { useWebsocket } from '../../../contexts/WebSocketContext';
+import JoinGameCard from '../../home/JoinGameCard';
+import CreateGameCard from '../../home/CreateGameCard';
 
 const Home = () => {
 	const { isConnected } = useWebsocket();

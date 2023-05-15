@@ -1,17 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
 import { devTools } from '../../common/devTools';
-import { isError, isSocketMessage, SocketMessage, unwrapMessage } from '../../types/socket/receive';
-import { RouterHandler, RoutesMap, useConfigureMiddleware } from '../../middleware/routerMiddleware';
+import { isSocketMessage, SocketMessage, unwrapMessage } from '../../types/socket/receive';
+import { RouterHandler, RoutesMap, useConfigureRoutes } from './middleware/configureRoutes';
+import { toast } from 'react-toastify';
 
 const handlePayload = (payload: string): SocketMessage | undefined => {
 	const message = unwrapMessage(payload);
 	devTools.log(`routing ${message?.service}|${message?.action}`, message?.data);
 	if (!isSocketMessage(message)) {
 		console.error('Unknown socket response:', payload);
-		return undefined;
-	}
-	if (isError(message)) {
-		console.error('Socket error:', message.service, '|', message.action, '.', message.data.error);
 		return undefined;
 	}
 	return message;
@@ -24,7 +21,10 @@ const useRouter = (routes: RoutesMap) => {
 			if (!payload) return;
 			const handler = routes.get(`${payload.service}|${payload.action}`);
 			if (handler) handler(payload);
-			else console.error(`No handler for ${payload.service}|${payload.action}`);
+			else {
+				toast.error('Well this is embarrassing. Something not handled happened');
+				console.error(`No handler for ${payload.service}|${payload.action}`);
+			}
 		},
 		[routes]
 	);
@@ -32,7 +32,7 @@ const useRouter = (routes: RoutesMap) => {
 
 export const useRoute = () => {
 	const [routeMap, setRouteMap] = useState<RoutesMap>(new Map<string, RouterHandler>());
-	const configure = useConfigureMiddleware();
+	const configure = useConfigureRoutes();
 	const router = useRouter(routeMap);
 	useEffect(() => {
 		setRouteMap(configure());

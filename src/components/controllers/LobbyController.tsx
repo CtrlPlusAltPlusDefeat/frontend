@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Lobby from '../pages/Lobby/Lobby';
-import { useLoadLobby } from '../hooks/loadLobby/loadLobby';
-import { useLoadMessages } from '../stores/chat/chatActions';
+import { useLoadLobby } from '../../hooks/loadLobby/loadLobby';
+import { useLoadMessages } from '../../stores/chat/chatActions';
 
 const LobbyController = () => {
 	const status = useLoadLobby();

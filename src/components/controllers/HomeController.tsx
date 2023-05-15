@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Home from '../pages/Home/Home';
-import { useLobbyStore } from '../stores/lobby/lobbyStore';
+import { useLobbyStore } from '../../stores/lobby/lobbyStore';
 import { useNavigate } from 'react-router-dom';
 
 const HomeController = () => {

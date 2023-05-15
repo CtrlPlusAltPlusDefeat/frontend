@@ -7,7 +7,6 @@ import { useChatStore } from '../../../stores/chat/chatStore';
 import { useLoadMessages, useSendMessage } from '../../../stores/chat/chatActions';
 import { useLobbyStore } from '../../../stores/lobby/lobbyStore';
 import { getVerticalScrollPercentage, useOnScroll, useOnScrollEnd } from '../../../hooks/elementScroll';
-import { devTools } from '../../../common/devTools';
 import { ChatMessage } from './ChatMessage';
 import { ChatDateLabel } from './ChatDateLabel';
 
@@ -46,8 +45,6 @@ const ChatBox = () => {
 		if (percent > 20) return;
 		loadMessages(messages[0].timestamp);
 	});
-
-	devTools.log('chat box messages', messages.length);
 
 	const send = useSendMessage();
 	return (

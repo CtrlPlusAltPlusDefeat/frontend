@@ -10,3 +10,12 @@ export type SendChat = SocketMessage<
 	},
 	typeof Services.Chat
 >;
+
+export type LoadChat = SocketMessage<
+	typeof RequestTypes.ClientActions.Load,
+	{
+		timestamp: number;
+		lobbyId: string;
+	},
+	typeof Services.Chat
+>;

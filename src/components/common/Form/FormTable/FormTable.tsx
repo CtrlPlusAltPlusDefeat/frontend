@@ -5,8 +5,8 @@ import { FormikHelpers } from 'formik/dist/types';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { AnimationControls, motion, TargetAndTransition, VariantLabels } from 'framer-motion';
 import ActionButton from '../../ActionButton/ActionButton';
-import { getFields } from './FormTable.functions';
 import { Row, SchemaRecord, SubmitButtonProps } from '../types';
+import { getFields } from './FormTable.functions';
 
 const defaultAnimation: TargetAndTransition = {
 	opacity: 1,
@@ -33,7 +33,8 @@ const FormTable = <Schema extends z.ZodType<unknown>>({ schema, rows, children, 
 	rows.forEach((row) =>
 		row.fields.forEach((input) => {
 			const { field } = input;
-			defaultValues[field.id] = field.default;
+			//required so we don't get a warning about uncontrolled inputs
+			defaultValues[field.id] = field.default || '';
 		})
 	);
 

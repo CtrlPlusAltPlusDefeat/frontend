@@ -1,8 +1,8 @@
 export const useDevTools = import.meta.env.MODE === 'development';
 export const devTools = {
-	log: (message?: any, ...params: any[]) => {
+	log: (message?: any, ...params: unknown[]) => {
 		if (!useDevTools) return;
-		console.log(message, params);
+		console.log(message, ...params);
 	}
 };
 

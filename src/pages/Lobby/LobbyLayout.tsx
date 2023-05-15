@@ -10,10 +10,10 @@ export const LeftPanel = () => {
 	return (
 		<Sidebar>
 			<div className={panelClass}>
-				<div className={'h-2/4 md:mb-40'}>
+				<div className={'h-1/4 md:h-2/4 '}>
 					<PlayerList />
 				</div>
-				<div className={'h-1/4 md:mb-20 h-full'}>
+				<div className={'h-2/4'}>
 					<ChatBox />
 				</div>
 				<div>

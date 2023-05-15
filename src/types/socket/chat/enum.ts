@@ -1,4 +1,4 @@
 export const RequestTypes = {
-	ClientActions: { Send: 'send' },
-	ServerActions: { Receive: 'receive' }
+	ClientActions: { Send: 'send', Load: 'load' },
+	ServerActions: { Receive: 'receive', Load: 'load' }
 } as const;

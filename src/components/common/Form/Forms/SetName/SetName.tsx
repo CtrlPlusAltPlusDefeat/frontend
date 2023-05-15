@@ -40,7 +40,7 @@ export const SetName = ({ onSubmit }: SetNameProps) => {
 			onSubmit={(values, helpers) => {
 				onSubmit(values.name);
 				setClose();
-				helpers.resetForm({ values: { text: '' } });
+				helpers.resetForm({ values: { name: '' } });
 			}}
 			externalButton={button ? button : undefined}
 		/>

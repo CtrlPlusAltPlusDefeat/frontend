@@ -1,10 +1,13 @@
-import FormTable from '../Form/FormTable/FormTable';
+import { useRef } from 'react';
+import moment from 'moment';
 import { z } from 'zod';
+import FormTable from '../Form/FormTable/FormTable';
 import { Row } from '../Form/types';
 import { useChatStore } from '../../../stores/chat/chatStore';
-import { useSendMessage } from '../../../stores/chat/chatActions';
+import { useLoadMessages, useSendMessage } from '../../../stores/chat/chatActions';
 import { useLobbyStore } from '../../../stores/lobby/lobbyStore';
-import moment from 'moment';
+import { getVerticalScrollPercentage, useOnScroll, useOnScrollEnd } from '../../../hooks/elementScroll';
+import { devTools } from '../../../common/devTools';
 
 const schema = z.object({ text: z.string() });
 const rows: Row<typeof schema>[] = [
@@ -23,20 +26,38 @@ const rows: Row<typeof schema>[] = [
 ];
 
 const ChatBox = () => {
+	const loadMessages = useLoadMessages();
 	const players = useLobbyStore((s) => s.lobby?.players);
 	const messages = useChatStore((s) => s.messages);
+	const canLoadMessages = useChatStore((s) => !s.loadedHistoric && !s.isLoading);
+	const chatBoxRef = useRef<HTMLUListElement>(null);
+
+	// since were passing an unstable callback this will run every render which is ideal since when we get a new message we render
+	useOnScrollEnd(chatBoxRef, (ele) => {
+		ele.scrollTop = ele.scrollHeight;
+	});
+
+	devTools.log('messages', messages.length);
+
+	useOnScroll(chatBoxRef, (e: HTMLElement) => {
+		if (messages.length === 0 || !canLoadMessages) return;
+		const percent = getVerticalScrollPercentage(e);
+		// if in top 20% of scroll load more messages
+		if (percent > 20) return;
+		loadMessages(messages[0].timestamp);
+	});
+
 	const send = useSendMessage();
 	return (
 		<div className="h-full bg-white rounded p-1">
 			<div className="w-full h-4/6 bg-slate-100 border border-solid border-slate rounded mb-2">
-				<ul className="chat h-full overflow-auto pl-2 divide-y	">
+				<ul ref={chatBoxRef} className="chat h-full overflow-auto pl-2 divide-y	">
 					{messages.map((message, i) => {
-						const player = players?.find((player) => player.id === message.sender);
-
+						const player = players?.find((player) => player.id === message.playerId);
 						return (
 							<li key={i} className={' py-2'}>
 								<div className={'inline pr-3 text-slate-600'}>
-									{moment(message.date).format('hh:mm')} {player?.name}
+									{moment(message.timestamp).format('hh:mm')} {player?.name}
 								</div>
 								<div className={'inline'}>{message.text}</div>
 							</li>

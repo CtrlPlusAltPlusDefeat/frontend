@@ -24,7 +24,6 @@ export const useJoinLobby = (lobbyId?: string) => {
 		(name: string) => {
 			if (!lobbyId || !isConnected) return;
 			const payload: JoinLobby = { service: 'lobby', action: 'join', data: { lobbyId, name } };
-			console.log('Sending join lobby', payload);
 			send(payload);
 		},
 		[isConnected, lobbyId, send]

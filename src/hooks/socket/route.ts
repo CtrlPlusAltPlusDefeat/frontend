@@ -4,9 +4,8 @@ import { isError, isSocketMessage, SocketMessage, unwrapMessage } from '../../ty
 import { RouterHandler, RoutesMap, useConfigureMiddleware } from '../../middleware/routerMiddleware';
 
 const handlePayload = (payload: string): SocketMessage | undefined => {
-	devTools.log('useRouterMiddleware', payload);
 	const message = unwrapMessage(payload);
-	devTools.log('onmessage', message);
+	devTools.log(`routing ${message?.service}|${message?.action}`, message?.data);
 	if (!isSocketMessage(message)) {
 		console.error('Unknown socket response:', payload);
 		return undefined;

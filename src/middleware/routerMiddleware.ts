@@ -7,7 +7,7 @@ import { Services } from '../types/socket/general';
 import { SocketMessage } from '../types/socket/receive';
 import { useSetSession } from '../stores/player/playerHandlers';
 import { useJoinedLobby, usePlayerJoined, usePlayerLeft } from '../stores/lobby/lobbyHandlers';
-import { useReceivedMessage } from '../stores/chat/chatHandlers';
+import { useLoadMessages, useReceivedMessage } from '../stores/chat/chatHandlers';
 
 export type RouterHandler = (payload: SocketMessage) => void;
 export type Router = (next: RouterHandler) => RouterHandler;
@@ -28,12 +28,15 @@ export const useConfigureMiddleware = () => {
 	const playerJoined = usePlayerJoined();
 	const playerLeft = usePlayerLeft();
 	const receivedMessage = useReceivedMessage();
+	const loadMessages = useLoadMessages();
 
 	return useCallback(() => {
 		const routes = new Map<string, RouterHandler>();
 		devTools.log('useConfigureMiddleware adding middleware');
+		//todo error handler middleware
 		//Chat
 		add(routes, [`${Services.Chat}|${ChatRequest.ServerActions.Receive}`, receivedMessage, []]);
+		add(routes, [`${Services.Chat}|${ChatRequest.ServerActions.Load}`, loadMessages, []]);
 
 		//Player
 		add(routes, [`${Services.Player}|${PlayerRequest.ServerActions.SetSession}`, setSession, []]);
@@ -44,5 +47,5 @@ export const useConfigureMiddleware = () => {
 		add(routes, [`${Services.Lobby}|${LobbyRequest.ServerActions.PlayerLeft}`, playerLeft, []]);
 
 		return routes;
-	}, [joinedLobby, playerJoined, playerLeft, receivedMessage, setSession]);
+	}, [joinedLobby, loadMessages, playerJoined, playerLeft, receivedMessage, setSession]);
 };

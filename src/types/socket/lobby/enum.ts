@@ -6,7 +6,7 @@ export const RequestTypes = {
 		SetName: 'set-name'
 	},
 	ServerActions: {
-		Joined: 'joined',
+		Joined: 'join',
 		PlayerJoined: 'player-joined',
 		PlayerLeft: 'player-left',
 		NameChange: 'name-change'

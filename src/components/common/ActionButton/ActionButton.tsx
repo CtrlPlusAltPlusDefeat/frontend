@@ -9,9 +9,10 @@ export interface ActionButtonProps {
 	type?: 'submit' | 'reset' | 'button' | undefined;
 	classes?: string[];
 	buttonRef?: React.RefObject<HTMLButtonElement>;
+	disabled?: boolean;
 }
 
-const ActionButton = ({ text, onClick, state, type, classes, buttonRef }: ActionButtonProps) => {
+const ActionButton = ({ text, onClick, state, type, classes, buttonRef, disabled }: ActionButtonProps) => {
 	const classNames: string[] = [...(classes ?? [])];
 	switch (state) {
 		case 'danger':
@@ -28,7 +29,7 @@ const ActionButton = ({ text, onClick, state, type, classes, buttonRef }: Action
 	}
 
 	return (
-		<button ref={buttonRef} type={type} className={`py-2 px-3 rounded shadow shadow-slate-500 ${classNames.join(' ')}`} onClick={onClick}>
+		<button disabled={disabled} ref={buttonRef} type={type} className={`py-2 px-3 rounded shadow shadow-slate-500 ${classNames.join(' ')}`} onClick={onClick}>
 			{text}
 		</button>
 	);

@@ -9,4 +9,7 @@ export type LobbyPlayer = {
 export type LobbyDetails = {
 	players: LobbyPlayer[];
 	lobbyId: string;
+	gameId: string;
+	inGame: boolean;
+	settings: string;
 };

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import HomeController from './components/controllers/HomeController';
-import LobbyController from './components/controllers/LobbyController';
+import GameController from './components/controllers/GameController';
 
 const router = createBrowserRouter([
 	{
@@ -11,7 +11,7 @@ const router = createBrowserRouter([
 	},
 	{
 		path: '/lobby/:lobbyId',
-		element: <LobbyController />
+		element: <GameController />
 	}
 ]);
 const App = () => {

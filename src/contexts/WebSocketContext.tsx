@@ -5,22 +5,25 @@ import { useSocket } from '../hooks/socket/socket';
 
 interface WebSocketContextObj {
 	isConnected: boolean;
-	send: (rawMessage: SocketMessage) => void;
+	send: (rawMessage: SocketMessage, waitForResponse?: boolean) => void;
+	loading: boolean;
 }
 
 const WebsocketContext = createContext<WebSocketContextObj>({
 	isConnected: false,
-	send: () => {}
+	send: () => {},
+	loading: false
 });
 
 export const WebsocketProvider = ({ children }: { children: React.ReactNode }) => {
 	const router = useRoute();
-	const { isConnected, send } = useSocket(router);
+	const { isConnected, send, loading } = useSocket(router);
 	return (
 		<WebsocketContext.Provider
 			value={{
 				isConnected,
-				send
+				send,
+				loading
 			}}
 		>
 			{children}

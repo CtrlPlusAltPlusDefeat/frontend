@@ -30,9 +30,10 @@ const useConnectToSocket = (onConnect: StateChangeHandler, onDisconnect: StateCh
 
 export const useSocket = (onMessage?: MessageHandler) => {
 	const ws = useRef<WebSocket | null>(null);
+	const [loading, setLoading] = useState(false);
 
 	const [isConnected, setIsConnected] = useState(false);
-	const send = useSend(ws);
+	const send = useSend(ws, setLoading);
 
 	//unwrap send callback to make it stable
 	const connectHandler = useCallback(() => {
@@ -45,10 +46,20 @@ export const useSocket = (onMessage?: MessageHandler) => {
 		ws.current = null;
 	}, [ws]);
 
+	const onMessageHandler = useCallback(
+		(msg: string) => {
+			// probably need to check the message relates to wait were waiting for
+			// else we could end loading before actually getting the data we want
+			setLoading(false);
+			onMessage?.(msg);
+		},
+		[onMessage]
+	);
+
 	//connect to socket
 	//the params to this have to be stable, so we use useCallback
 	//we cannot send an object unless it is stored in state or memorized due to reference equality
-	const connectToSocket = useConnectToSocket(connectHandler, disconnectHandler, onMessage);
+	const connectToSocket = useConnectToSocket(connectHandler, disconnectHandler, onMessageHandler);
 
 	//connect to socket on interval
 	useEffect(() => {
@@ -70,6 +81,7 @@ export const useSocket = (onMessage?: MessageHandler) => {
 
 	return {
 		isConnected,
-		send: send
+		send: send,
+		loading
 	};
 };

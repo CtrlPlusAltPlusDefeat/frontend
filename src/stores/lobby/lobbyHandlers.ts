@@ -1,16 +1,19 @@
 import { useCallback } from 'react';
 import { SocketMessage } from '../../types/socket/receive';
-import { isJoinedLobby, isPlayerJoined, isPlayerLeft } from '../../types/socket/lobby/response';
+import { isJoinedLobby, isPlayerJoined, isPlayerLeft, isStartGame } from '../../types/socket/lobby/response';
 import { useLobbyStore } from './lobbyStore';
 import { toast } from 'react-toastify';
 
 export const useJoinedLobby = () => {
-	const setStore = useLobbyStore((s) => s.setStore);
+	const setLobby = useLobbyStore((s) => s.setLobby);
+	const setPlayer = useLobbyStore((s) => s.setPlayer);
 	return useCallback(
 		(payload: SocketMessage) => {
-			if (isJoinedLobby(payload)) setStore({ lobby: payload.data.lobby, player: payload.data.player });
+			if (!isJoinedLobby(payload)) return;
+			setLobby({ lobby: payload.data.lobby });
+			setPlayer({ player: payload.data.player });
 		},
-		[setStore]
+		[setLobby, setPlayer]
 	);
 };
 
@@ -35,5 +38,18 @@ export const usePlayerLeft = () => {
 			toast.info(`${payload.data.player.name} left the lobby`);
 		},
 		[upsertPlayer]
+	);
+};
+
+export const useStartGame = () => {
+	const setLobby = useLobbyStore((s) => s.setLobby);
+
+	return useCallback(
+		(payload: SocketMessage) => {
+			const players = useLobbyStore.getState().lobby?.players;
+			if (!isStartGame(payload) || !players) return;
+			setLobby({ lobby: { ...payload.data, players: players } });
+		},
+		[setLobby]
 	);
 };

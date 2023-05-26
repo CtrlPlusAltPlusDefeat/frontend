@@ -26,3 +26,11 @@ export type LeaveLobby = SocketMessage<
 	},
 	typeof Services.Lobby
 >;
+
+export type StartGame = SocketMessage<
+	typeof RequestTypes.ClientActions.StartGame,
+	{
+		lobbyId: string;
+	},
+	typeof Services.Lobby
+>;

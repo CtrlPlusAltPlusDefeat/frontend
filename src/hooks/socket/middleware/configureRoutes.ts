@@ -6,7 +6,7 @@ import { RequestTypes as ChatRequest } from '../../../types/socket/chat/enum';
 import { Services } from '../../../types/socket/general';
 import { SocketMessage } from '../../../types/socket/receive';
 import { useSetSession } from '../../../stores/player/playerHandlers';
-import { useJoinedLobby, usePlayerJoined, usePlayerLeft } from '../../../stores/lobby/lobbyHandlers';
+import { useJoinedLobby, usePlayerJoined, usePlayerLeft, useStartGame } from '../../../stores/lobby/lobbyHandlers';
 import { useLoadMessages, useReceivedMessage } from '../../../stores/chat/chatHandlers';
 import { handleError } from './handleError';
 
@@ -28,6 +28,7 @@ export const useConfigureRoutes = () => {
 	const joinedLobby = useJoinedLobby();
 	const playerJoined = usePlayerJoined();
 	const playerLeft = usePlayerLeft();
+	const startGame = useStartGame();
 	const receivedMessage = useReceivedMessage();
 	const loadMessages = useLoadMessages();
 
@@ -46,7 +47,8 @@ export const useConfigureRoutes = () => {
 		add(routes, [`${Services.Lobby}|${LobbyRequest.ServerActions.Joined}`, joinedLobby, [handleError]]);
 		add(routes, [`${Services.Lobby}|${LobbyRequest.ServerActions.PlayerJoined}`, playerJoined, [handleError]]);
 		add(routes, [`${Services.Lobby}|${LobbyRequest.ServerActions.PlayerLeft}`, playerLeft, [handleError]]);
+		add(routes, [`${Services.Lobby}|${LobbyRequest.ServerActions.StartGame}`, startGame, [handleError]]);
 
 		return routes;
-	}, [joinedLobby, loadMessages, playerJoined, playerLeft, receivedMessage, setSession]);
+	}, [joinedLobby, loadMessages, playerJoined, playerLeft, receivedMessage, setSession, startGame]);
 };

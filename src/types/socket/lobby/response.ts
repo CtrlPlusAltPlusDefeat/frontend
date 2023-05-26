@@ -28,6 +28,9 @@ export type JoinedLobby = SocketMessage<
 	typeof Services.Player
 >;
 
+export type StartGame = SocketMessage<typeof RequestTypes.ServerActions.StartGame, Omit<LobbyDetails, 'players'>, typeof Services.Player>;
+
 export const isJoinedLobby = (msg: SocketMessage): msg is JoinedLobby => msg.action === RequestTypes.ServerActions.Joined;
 export const isPlayerJoined = (msg: SocketMessage): msg is PlayerJoined => msg.action === RequestTypes.ServerActions.PlayerJoined;
 export const isPlayerLeft = (msg: SocketMessage): msg is PlayerLeft => msg.action === RequestTypes.ServerActions.PlayerLeft;
+export const isStartGame = (msg: SocketMessage): msg is StartGame => msg.action === RequestTypes.ServerActions.StartGame;

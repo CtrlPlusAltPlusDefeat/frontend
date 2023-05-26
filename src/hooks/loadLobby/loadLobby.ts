@@ -12,7 +12,6 @@ export const useLoadLobby = (): Status => {
 	const paramLobbyId = useParams().lobbyId;
 	const storeLobbyId = useLobbyStore((s) => s.lobbyId);
 	const lobbyLoaded = useLobbyStore((s) => s.lobby !== undefined);
-
 	const lobbyId = paramLobbyId || storeLobbyId;
 	const playerName = sessionStorage.getItem(`session-player-name-${lobbyId}`);
 

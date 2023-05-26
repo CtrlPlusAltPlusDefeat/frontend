@@ -6,7 +6,8 @@ interface LobbyStoreState {
 	lobby?: LobbyDetails;
 	player?: LobbyPlayer;
 	lobbyId?: string;
-	setStore: ({ lobby, player }: { lobby: LobbyDetails; player: LobbyPlayer }) => void;
+	setLobby: ({ lobby }: { lobby: LobbyDetails }) => void;
+	setPlayer: ({ player }: { player: LobbyPlayer }) => void;
 	setLobbyId: (lobbyId?: string) => void;
 	upsertPlayer: (player: LobbyPlayer) => void;
 	clear: () => void;
@@ -17,10 +18,14 @@ export const useLobbyStore = create(
 		lobby: undefined,
 		player: undefined,
 		lobbyId: undefined,
-		setStore: ({ lobby, player }) =>
+		setLobby: ({ lobby }) =>
 			set(() => {
-				sessionStorage.setItem(`session-player-name-${lobby.lobbyId}`, player.name);
-				return { lobbyId: lobby.lobbyId, lobby, player };
+				return { lobbyId: lobby.lobbyId, lobby };
+			}),
+		setPlayer: ({ player }) =>
+			set((state) => {
+				sessionStorage.setItem(`session-player-name-${state.lobbyId}`, player.name);
+				return { player };
 			}),
 		setLobbyId: (lobbyId) =>
 			set(() => {

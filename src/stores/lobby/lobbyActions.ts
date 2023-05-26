@@ -1,5 +1,5 @@
 import { useWebsocket } from '../../contexts/WebSocketContext';
-import { CreateLobby, JoinLobby, LeaveLobby } from '../../types/socket/lobby/request';
+import { CreateLobby, JoinLobby, LeaveLobby, StartGame } from '../../types/socket/lobby/request';
 import { useCallback } from 'react';
 import { useLobbyStore } from './lobbyStore';
 import { useNavigate } from 'react-router-dom';
@@ -43,4 +43,15 @@ export const useLeaveLobby = () => {
 		clear();
 		navigate('/');
 	}, [clear, isConnected, lobbyId, navigate, send]);
+};
+
+export const useStartGame = () => {
+	const lobbyId = useLobbyStore((state) => state.lobbyId);
+	const { send, isConnected } = useWebsocket();
+
+	return useCallback(() => {
+		if (!isConnected || !lobbyId) return;
+		const payload: StartGame = { service: 'lobby', action: 'start-game', data: { lobbyId } };
+		send(payload, true);
+	}, [isConnected, lobbyId, send]);
 };

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import HomeController from './components/controllers/HomeController';
-import GameController from './components/controllers/GameController';
+import HomeController from './controllers/HomeController';
+import GameController from './controllers/GameController';
 
 const router = createBrowserRouter([
 	{

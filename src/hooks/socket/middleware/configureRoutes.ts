@@ -47,7 +47,7 @@ export const useConfigureRoutes = () => {
 		add(routes, [`${Services.Lobby}|${LobbyRequest.ServerActions.Joined}`, joinedLobby, [handleError]]);
 		add(routes, [`${Services.Lobby}|${LobbyRequest.ServerActions.PlayerJoined}`, playerJoined, [handleError]]);
 		add(routes, [`${Services.Lobby}|${LobbyRequest.ServerActions.PlayerLeft}`, playerLeft, [handleError]]);
-		add(routes, [`${Services.Lobby}|${LobbyRequest.ServerActions.StartGame}`, startGame, [handleError]]);
+		add(routes, [`${Services.Lobby}|${LobbyRequest.ServerActions.LoadGame}`, startGame, [handleError]]);
 
 		return routes;
 	}, [joinedLobby, loadMessages, playerJoined, playerLeft, receivedMessage, setSession, startGame]);

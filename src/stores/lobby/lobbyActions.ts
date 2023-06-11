@@ -1,5 +1,5 @@
 import { useWebsocket } from '../../contexts/WebSocketContext';
-import { CreateLobby, JoinLobby, LeaveLobby, StartGame } from '../../types/socket/lobby/request';
+import { CreateLobby, JoinLobby, LeaveLobby, LoadGame } from '../../types/socket/lobby/request';
 import { useCallback } from 'react';
 import { useLobbyStore } from './lobbyStore';
 import { useNavigate } from 'react-router-dom';
@@ -51,7 +51,7 @@ export const useStartGame = () => {
 
 	return useCallback(() => {
 		if (!isConnected || !lobbyId) return;
-		const payload: StartGame = { service: 'lobby', action: 'start-game', data: { lobbyId } };
+		const payload: LoadGame = { service: 'lobby', action: 'load-game', data: { lobbyId } };
 		send(payload, true);
 	}, [isConnected, lobbyId, send]);
 };

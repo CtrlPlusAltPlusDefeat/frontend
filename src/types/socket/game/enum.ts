@@ -3,5 +3,8 @@ export const RequestTypes = {
 		GetState: 'get-state',
 		PlayerAction: 'player-action'
 	},
-	ServerActions: { GetState: 'get-state' }
+	ServerActions: {
+		GetState: 'get-state',
+		PlayerAction: 'player-action'
+	}
 } as const;

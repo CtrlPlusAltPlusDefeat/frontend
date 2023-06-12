@@ -22,3 +22,13 @@ export interface Team {
 	name: TeamName;
 	players: string[];
 }
+
+export const getTeamCardColour = (name: TeamName) => {
+	switch (name) {
+		case 'red':
+			return 'bg-red-300 border-red-700';
+		case 'blue':
+			return 'bg-blue-300 border-blue-700';
+	}
+	return '';
+};

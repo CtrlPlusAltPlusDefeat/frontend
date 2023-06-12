@@ -7,4 +7,4 @@ export const Services = {
 type ServiceKey = keyof typeof Services;
 export type Service = (typeof Services)[ServiceKey];
 
-export type Status = 'not-found' | 'loading' | 'loaded';
+export type Status = 'not-found' | 'loading' | 'loaded' | 'idle';

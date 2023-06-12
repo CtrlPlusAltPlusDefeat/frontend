@@ -1,11 +1,10 @@
+import { useCallback, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useLobbyStore } from '../../stores/lobby/lobbyStore';
 import { useJoinLobby } from '../../stores/lobby/lobbyActions';
 import { useSetNameModal } from '../../components/common/Modal/Modals/SetName';
-import { useCallback, useEffect } from 'react';
 import { usePlayerStore } from '../../stores/player/playerStore';
-
-export type Status = 'not-found' | 'joining' | 'joined';
+import { Status } from '../../types/socket/general';
 
 export const useLoadLobby = (): Status => {
 	const sessionId = usePlayerStore((s) => s.sessionId);
@@ -30,7 +29,7 @@ export const useLoadLobby = (): Status => {
 	}, [joinCallback, lobbyLoaded, sessionId]);
 
 	if (!lobbyId) return 'not-found';
-	if (!playerName || !storeLobbyId) return 'joining';
+	if (!playerName || !storeLobbyId) return 'loading';
 
-	return 'joined';
+	return 'loaded';
 };

@@ -4,13 +4,13 @@ export const RequestTypes = {
 		Leave: 'leave',
 		Create: 'create',
 		SetName: 'set-name',
-		StartGame: 'start-game'
+		LoadGame: 'load-game'
 	},
 	ServerActions: {
 		Joined: 'join',
 		PlayerJoined: 'player-joined',
 		PlayerLeft: 'player-left',
 		NameChange: 'name-change',
-		StartGame: 'start-game'
+		LoadGame: 'load-game'
 	}
 } as const;

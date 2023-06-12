@@ -6,3 +6,5 @@ export const Services = {
 } as const;
 type ServiceKey = keyof typeof Services;
 export type Service = (typeof Services)[ServiceKey];
+
+export type Status = 'not-found' | 'loading' | 'loaded';

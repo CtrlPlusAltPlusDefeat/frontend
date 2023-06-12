@@ -41,7 +41,7 @@ export const usePlayerLeft = () => {
 	);
 };
 
-export const useStartGame = () => {
+export const useLoadGame = () => {
 	const setLobby = useLobbyStore((s) => s.setLobby);
 
 	return useCallback(

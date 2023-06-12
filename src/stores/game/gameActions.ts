@@ -1,17 +1,14 @@
 import { useCallback } from 'react';
-import { useLobbyStore } from '../lobby/lobbyStore';
 import { useWebsocket } from '../../contexts/WebSocketContext';
 import { GetStateReq } from '../../types/socket/game/request';
 
-export const useGetState = () => {
-	const lobby = useLobbyStore((state) => state.lobby);
+export const useGetState = ({ gameSessionId, lobbyId }: { gameSessionId?: string; lobbyId?: string }) => {
 	const { send, isConnected } = useWebsocket();
 
 	return useCallback(() => {
-		if (!isConnected || !lobby) return;
-		const { gameSessionId, lobbyId } = lobby;
-		if (!gameSessionId) return;
+		if (!isConnected) return;
+		if (!gameSessionId || !lobbyId) return;
 		const payload: GetStateReq = { service: 'game', action: 'get-state', data: { lobbyId, gameSessionId } };
 		send(payload, true);
-	}, [isConnected, lobby, send]);
+	}, [isConnected, gameSessionId, lobbyId, send]);
 };

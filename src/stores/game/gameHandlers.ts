@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { SocketMessage } from '../../types/socket/receive';
-import { isGetState } from '../../types/socket/game/response';
+import { isGetState, isPlayerAction } from '../../types/socket/game/response';
 import { useGameStore } from './gameStore';
 
 export const useHandleGetState = () => {
@@ -15,5 +15,16 @@ export const useHandleGetState = () => {
 			setInfo(payload.data.info);
 		},
 		[setState, setInfo, setTeams]
+	);
+};
+
+export const useHandlePlayerAction = () => {
+	const setState = useGameStore((s) => s.setState);
+	return useCallback(
+		(payload: SocketMessage) => {
+			if (!isPlayerAction(payload)) return;
+			setState(payload.data);
+		},
+		[setState]
 	);
 };

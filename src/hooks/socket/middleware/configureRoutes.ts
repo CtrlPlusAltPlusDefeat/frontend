@@ -10,7 +10,7 @@ import { useSetSession } from '../../../stores/player/playerHandlers';
 import { useJoinedLobby, usePlayerJoined, usePlayerLeft, useLoadGame } from '../../../stores/lobby/lobbyHandlers';
 import { useLoadMessages, useReceivedMessage } from '../../../stores/chat/chatHandlers';
 import { handleError } from './handleError';
-import { useHandleGetState } from '../../../stores/game/gameHandlers';
+import { useHandleGetState, useHandlePlayerAction } from '../../../stores/game/gameHandlers';
 
 export type RouterHandler = (payload: SocketMessage) => void;
 export type Middleware = (next: RouterHandler) => RouterHandler;
@@ -34,6 +34,7 @@ export const useConfigureRoutes = () => {
 	const receivedMessage = useReceivedMessage();
 	const loadMessages = useLoadMessages();
 	const getState = useHandleGetState();
+	const playerAction = useHandlePlayerAction();
 
 	return useCallback(() => {
 		const routes = new Map<string, RouterHandler>();
@@ -54,6 +55,7 @@ export const useConfigureRoutes = () => {
 
 		//Game
 		add(routes, [`${Services.Game}|${GameRequest.ServerActions.GetState}`, getState, [handleError]]);
+		add(routes, [`${Services.Game}|${GameRequest.ServerActions.PlayerAction}`, playerAction, [handleError]]);
 		return routes;
-	}, [receivedMessage, loadMessages, setSession, joinedLobby, playerJoined, playerLeft, loadGame, getState]);
+	}, [receivedMessage, loadMessages, setSession, joinedLobby, playerJoined, playerLeft, loadGame, getState, playerAction]);
 };

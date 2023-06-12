@@ -14,7 +14,7 @@ export interface GameSessionInfo {
 }
 
 export interface GameSessionState {
-	currentTurn: TeamName;
+	currentTurn: TeamName | '';
 	state: State;
 }
 

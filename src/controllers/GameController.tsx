@@ -9,7 +9,7 @@ const GameController = () => {
 	if (!inGame) return <LobbyController />;
 	if (state === 'not-found') return <div>Game not found...</div>;
 	if (state === 'loading') return <div>Loading...</div>;
-	return 'inGame';
+	return <>'inGame'</>;
 };
 
 export default GameController;

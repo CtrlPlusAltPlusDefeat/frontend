@@ -40,7 +40,7 @@ export const useConfigureRoutes = () => {
 		devTools.log('useConfigureMiddleware adding middleware');
 		//todo error handler middleware
 		//Chat
-		add(routes, [`${Services.Chat}|${ChatRequest.ServerActions.Receive}`, receivedMessage, [handleError]]);
+		add(routes, [`${Services.Chat}|${ChatRequest.ServerActions.Send}`, receivedMessage, [handleError]]);
 		add(routes, [`${Services.Chat}|${ChatRequest.ServerActions.Load}`, loadMessages, [handleError]]);
 
 		//Player

@@ -2,15 +2,19 @@ import { useGetState } from '../../stores/game/gameActions';
 import { useEffect, useRef, useState } from 'react';
 import { Status } from '../../types/socket/general';
 import { useLobbyStore } from '../../stores/lobby/lobbyStore';
+import { useGameStore } from '../../stores/game/gameStore';
 
 export const useLoadGameSession = (enabled: boolean) => {
 	const gameSessionId = useLobbyStore((state) => state.lobby?.gameSessionId);
 	const lobbyId = useLobbyStore((state) => state.lobby?.lobbyId);
+	const gState = useGameStore((state) => state.state);
 
 	const [isEnabled, setIsEnabled] = useState(enabled);
-	const gameState = useRef<Status>('loading');
+	const gameState = useRef<Status>('idle');
 
 	const getGameState = useGetState({ gameSessionId, lobbyId });
+
+	if (gState) gameState.current = 'loaded';
 
 	useEffect(() => {
 		setIsEnabled(enabled);
@@ -18,9 +22,9 @@ export const useLoadGameSession = (enabled: boolean) => {
 
 	useEffect(() => {
 		if (!isEnabled || !gameSessionId || !lobbyId) return;
-		if (gameState.current === 'loaded') return;
+		if (gameState.current !== 'idle') return;
 		getGameState();
-		gameState.current = 'loaded';
+		gameState.current = 'loading';
 	}, [gameSessionId, getGameState, isEnabled, lobbyId]);
 
 	if (gameState.current === 'loaded') return 'loaded';

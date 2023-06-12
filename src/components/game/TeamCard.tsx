@@ -1,23 +1,23 @@
 import { useLobbyStore } from '../../stores/lobby/lobbyStore';
-import { TeamName } from '../../types/socket/game/types';
+import { getTeamCardColour, TeamName } from '../../types/socket/game/types';
 import TeamPlayerItem from './TeamPlayerItem';
 
 interface TeamCardProps {
-	teamPlayers: string[];
-	teamName: TeamName;
+	players: string[];
+	name: TeamName;
 }
 
-const TeamCard = ({ teamPlayers, teamName }: TeamCardProps) => {
-	const players = useLobbyStore((s) => s.lobby?.players);
+const TeamCard = ({ players, name }: TeamCardProps) => {
+	const lobbyP = useLobbyStore((s) => s.lobby?.players);
 	return (
-		<div className={'bg-white border-solid border border-slate rounded'}>
-			<div className={'p-2'}>{teamName.toUpperCase()}</div>
-			{players && (
+		<div className={`${getTeamCardColour(name)} border-solid border-2 rounded `}>
+			<div className={'p-2'}>{name.toUpperCase()}</div>
+			{lobbyP && (
 				<div className={'flex flex-col'}>
-					{teamPlayers?.map((p) => {
-						const player = players.find((item) => item.id === p);
+					{players?.map((p) => {
+						const player = lobbyP.find((item) => item.id === p);
 						if (!player || !player.name) return null;
-						return <TeamPlayerItem key={player.id} {...player} />;
+						return <TeamPlayerItem key={player.id} team={name} {...player} />;
 					})}
 				</div>
 			)}

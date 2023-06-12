@@ -32,3 +32,13 @@ export const getTeamCardColour = (name: TeamName) => {
 	}
 	return '';
 };
+
+export const getTeamTextColour = (name: TeamName) => {
+	switch (name) {
+		case 'red':
+			return 'text-red-700';
+		case 'blue':
+			return 'text-blue-700';
+	}
+	return '';
+};

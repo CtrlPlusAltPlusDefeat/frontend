@@ -23,11 +23,10 @@ export const MiddlePanel = () => {
 	const playerTeam = useGetPlayerTeam();
 	const playerAction = usePlayerAction();
 
-	if (!currentTeam) return null;
 	return (
 		<div className="w-full">
-			<p className={getTeamTextColour(currentTeam)}>current team: {currentTeam}</p>
-			{playerTeam?.name === currentTeam && <ActionButton state={'danger'} text={'Player Action'} onClick={playerAction} />}
+			<p className={currentTeam ? getTeamTextColour(currentTeam) : ''}>current team: {currentTeam}</p>
+			{playerTeam?.name === currentTeam || (currentTeam === '' && <ActionButton state={'danger'} text={'Player Action'} onClick={playerAction} />)}
 		</div>
 	);
 };

@@ -26,7 +26,7 @@ export const MiddlePanel = () => {
 	return (
 		<div className="w-full">
 			<p className={currentTeam ? getTeamTextColour(currentTeam) : ''}>current team: {currentTeam}</p>
-			{playerTeam?.name === currentTeam || (currentTeam === '' && <ActionButton state={'danger'} text={'Player Action'} onClick={playerAction} />)}
+			{(playerTeam?.name === currentTeam || currentTeam === '') && <ActionButton state={'danger'} text={'Player Action'} onClick={playerAction} />}
 		</div>
 	);
 };

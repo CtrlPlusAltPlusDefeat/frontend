@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { SocketMessage } from '../../types/socket/receive';
-import { isGetState, isPlayerAction } from '../../types/socket/game/response';
+import { isGetState, isPlayerAction, isSwapTeams } from '../../types/socket/game/response';
 import { useGameStore } from './gameStore';
 
 export const useHandleGetState = () => {
@@ -26,5 +26,16 @@ export const useHandlePlayerAction = () => {
 			setState(payload.data);
 		},
 		[setState]
+	);
+};
+
+export const useHandleSwapTeam = () => {
+	const setTeams = useGameStore((s) => s.setTeams);
+	return useCallback(
+		(payload: SocketMessage) => {
+			if (!isSwapTeams(payload)) return;
+			setTeams(payload.data);
+		},
+		[setTeams]
 	);
 };

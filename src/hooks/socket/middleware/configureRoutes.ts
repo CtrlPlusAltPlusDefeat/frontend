@@ -25,24 +25,35 @@ const add = (routes: RoutesMap, [route, handler, middleware]: AddProps) => {
 	routes.set(route, handler);
 };
 
+const useChatRoutes = () => {
+	const receivedMessage = useReceivedMessage();
+	const loadMessages = useLoadMessages();
+	return useCallback(
+		(routes: RoutesMap) => {
+			add(routes, [`${Services.Chat}|${ChatRequest.ServerActions.Send}`, receivedMessage, [handleError]]);
+			add(routes, [`${Services.Chat}|${ChatRequest.ServerActions.Load}`, loadMessages, [handleError]]);
+		},
+		[loadMessages, receivedMessage]
+	);
+};
+
 export const useConfigureRoutes = () => {
 	const setSession = useSetSession();
 	const joinedLobby = useJoinedLobby();
 	const playerJoined = usePlayerJoined();
 	const playerLeft = usePlayerLeft();
 	const loadGame = useLoadGame();
-	const receivedMessage = useReceivedMessage();
-	const loadMessages = useLoadMessages();
+
 	const getState = useHandleGetState();
 	const playerAction = useHandlePlayerAction();
+
+	const chatRoutes = useChatRoutes();
 
 	return useCallback(() => {
 		const routes = new Map<string, RouterHandler>();
 		devTools.log('useConfigureMiddleware adding middleware');
-		//todo error handler middleware
 		//Chat
-		add(routes, [`${Services.Chat}|${ChatRequest.ServerActions.Send}`, receivedMessage, [handleError]]);
-		add(routes, [`${Services.Chat}|${ChatRequest.ServerActions.Load}`, loadMessages, [handleError]]);
+		chatRoutes(routes);
 
 		//Player
 		add(routes, [`${Services.Player}|${PlayerRequest.ServerActions.SetSession}`, setSession, [handleError]]);
@@ -57,5 +68,5 @@ export const useConfigureRoutes = () => {
 		add(routes, [`${Services.Game}|${GameRequest.ServerActions.GetState}`, getState, [handleError]]);
 		add(routes, [`${Services.Game}|${GameRequest.ServerActions.PlayerAction}`, playerAction, [handleError]]);
 		return routes;
-	}, [receivedMessage, loadMessages, setSession, joinedLobby, playerJoined, playerLeft, loadGame, getState, playerAction]);
+	}, [chatRoutes, setSession, joinedLobby, playerJoined, playerLeft, loadGame, getState, playerAction]);
 };

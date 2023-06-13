@@ -10,7 +10,7 @@ import { useSetSession } from '../../../stores/player/playerHandlers';
 import { useJoinedLobby, usePlayerJoined, usePlayerLeft, useLoadGame } from '../../../stores/lobby/lobbyHandlers';
 import { useLoadMessages, useReceivedMessage } from '../../../stores/chat/chatHandlers';
 import { handleError } from './handleError';
-import { useHandleGetState, useHandlePlayerAction } from '../../../stores/game/gameHandlers';
+import { useHandleGetState, useHandlePlayerAction, useHandleSwapTeam } from '../../../stores/game/gameHandlers';
 
 export type RouterHandler = (payload: SocketMessage) => void;
 export type Middleware = (next: RouterHandler) => RouterHandler;
@@ -64,12 +64,14 @@ const useLobbyRoutes = () => {
 const useGameRoutes = () => {
 	const getState = useHandleGetState();
 	const playerAction = useHandlePlayerAction();
+	const swapTeam = useHandleSwapTeam();
 	return useCallback(
 		(routes: RoutesMap) => {
 			add(routes, [`${Services.Game}|${GameRequest.ServerActions.GetState}`, getState, [handleError]]);
 			add(routes, [`${Services.Game}|${GameRequest.ServerActions.PlayerAction}`, playerAction, [handleError]]);
+			add(routes, [`${Services.Game}|${GameRequest.ServerActions.SwapTeams}`, swapTeam, [handleError]]);
 		},
-		[getState, playerAction]
+		[getState, playerAction, swapTeam]
 	);
 };
 

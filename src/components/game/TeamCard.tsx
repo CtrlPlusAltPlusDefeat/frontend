@@ -1,6 +1,10 @@
 import { useLobbyStore } from '../../stores/lobby/lobbyStore';
 import { getTeamCardColour, TeamName } from '../../types/socket/game/types';
 import TeamPlayerItem from './TeamPlayerItem';
+import ActionButton from '../common/ActionButton/ActionButton';
+import { useSwapTeam } from '../../stores/game/gameActions';
+import { useGameStore } from '../../stores/game/gameStore';
+import { useGetPlayerTeam } from '../../hooks/game/getPlayerTeam';
 
 interface TeamCardProps {
 	players: string[];
@@ -8,6 +12,10 @@ interface TeamCardProps {
 }
 
 const TeamCard = ({ players, name }: TeamCardProps) => {
+	const swapTeam = useSwapTeam();
+	const playerTeam = useGetPlayerTeam();
+
+	const gState = useGameStore((s) => s.state?.state);
 	const lobbyP = useLobbyStore((s) => s.lobby?.players);
 	return (
 		<div className={`${getTeamCardColour(name)} border-solid border-2 rounded `}>
@@ -21,6 +29,7 @@ const TeamCard = ({ players, name }: TeamCardProps) => {
 					})}
 				</div>
 			)}
+			{gState === 'prematch' && playerTeam?.name !== name && <ActionButton text={'Join'} onClick={() => swapTeam(name)} />}
 		</div>
 	);
 };

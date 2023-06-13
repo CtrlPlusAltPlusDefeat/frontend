@@ -36,37 +36,56 @@ const useChatRoutes = () => {
 		[loadMessages, receivedMessage]
 	);
 };
-
-export const useConfigureRoutes = () => {
+const usePlayerRoutes = () => {
 	const setSession = useSetSession();
+
+	return useCallback(
+		(routes: RoutesMap) => {
+			add(routes, [`${Services.Player}|${PlayerRequest.ServerActions.SetSession}`, setSession, [handleError]]);
+		},
+		[setSession]
+	);
+};
+const useLobbyRoutes = () => {
 	const joinedLobby = useJoinedLobby();
 	const playerJoined = usePlayerJoined();
 	const playerLeft = usePlayerLeft();
 	const loadGame = useLoadGame();
-
+	return useCallback(
+		(routes: RoutesMap) => {
+			add(routes, [`${Services.Lobby}|${LobbyRequest.ServerActions.Joined}`, joinedLobby, [handleError]]);
+			add(routes, [`${Services.Lobby}|${LobbyRequest.ServerActions.PlayerJoined}`, playerJoined, [handleError]]);
+			add(routes, [`${Services.Lobby}|${LobbyRequest.ServerActions.PlayerLeft}`, playerLeft, [handleError]]);
+			add(routes, [`${Services.Lobby}|${LobbyRequest.ServerActions.LoadGame}`, loadGame, [handleError]]);
+		},
+		[joinedLobby, loadGame, playerJoined, playerLeft]
+	);
+};
+const useGameRoutes = () => {
 	const getState = useHandleGetState();
 	const playerAction = useHandlePlayerAction();
+	return useCallback(
+		(routes: RoutesMap) => {
+			add(routes, [`${Services.Game}|${GameRequest.ServerActions.GetState}`, getState, [handleError]]);
+			add(routes, [`${Services.Game}|${GameRequest.ServerActions.PlayerAction}`, playerAction, [handleError]]);
+		},
+		[getState, playerAction]
+	);
+};
 
+export const useConfigureRoutes = () => {
 	const chatRoutes = useChatRoutes();
+	const playerRoutes = usePlayerRoutes();
+	const lobbyRoutes = useLobbyRoutes();
+	const gameRoutes = useGameRoutes();
 
 	return useCallback(() => {
 		const routes = new Map<string, RouterHandler>();
 		devTools.log('useConfigureMiddleware adding middleware');
-		//Chat
 		chatRoutes(routes);
-
-		//Player
-		add(routes, [`${Services.Player}|${PlayerRequest.ServerActions.SetSession}`, setSession, [handleError]]);
-
-		//Lobby
-		add(routes, [`${Services.Lobby}|${LobbyRequest.ServerActions.Joined}`, joinedLobby, [handleError]]);
-		add(routes, [`${Services.Lobby}|${LobbyRequest.ServerActions.PlayerJoined}`, playerJoined, [handleError]]);
-		add(routes, [`${Services.Lobby}|${LobbyRequest.ServerActions.PlayerLeft}`, playerLeft, [handleError]]);
-		add(routes, [`${Services.Lobby}|${LobbyRequest.ServerActions.LoadGame}`, loadGame, [handleError]]);
-
-		//Game
-		add(routes, [`${Services.Game}|${GameRequest.ServerActions.GetState}`, getState, [handleError]]);
-		add(routes, [`${Services.Game}|${GameRequest.ServerActions.PlayerAction}`, playerAction, [handleError]]);
+		playerRoutes(routes);
+		lobbyRoutes(routes);
+		gameRoutes(routes);
 		return routes;
-	}, [chatRoutes, setSession, joinedLobby, playerJoined, playerLeft, loadGame, getState, playerAction]);
+	}, [chatRoutes, playerRoutes, lobbyRoutes, gameRoutes]);
 };

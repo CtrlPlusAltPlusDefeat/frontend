@@ -18,9 +18,14 @@ export interface GameSessionState {
 	state: State;
 }
 
+export interface TeamPlayer {
+	id: string;
+	data?: string;
+}
+
 export interface Team {
 	name: TeamName;
-	players: string[];
+	players: TeamPlayer[];
 }
 
 export const getTeamCardColour = (name: TeamName) => {

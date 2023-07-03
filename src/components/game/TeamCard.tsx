@@ -1,5 +1,5 @@
 import { useLobbyStore } from '../../stores/lobby/lobbyStore';
-import { getTeamCardColour, TeamName } from '../../types/socket/game/types';
+import { getTeamCardColour, TeamName, TeamPlayer } from '../../types/socket/game/types';
 import TeamPlayerItem from './TeamPlayerItem';
 import ActionButton from '../common/ActionButton/ActionButton';
 import { useSwapTeam } from '../../stores/game/gameActions';
@@ -7,7 +7,7 @@ import { useGameStore } from '../../stores/game/gameStore';
 import { useGetPlayerTeam } from '../../hooks/game/getPlayerTeam';
 
 interface TeamCardProps {
-	players: string[];
+	players: TeamPlayer[];
 	name: TeamName;
 }
 
@@ -23,7 +23,7 @@ const TeamCard = ({ players, name }: TeamCardProps) => {
 			{lobbyP && (
 				<div className={'flex flex-col'}>
 					{players?.map((p) => {
-						const player = lobbyP.find((item) => item.id === p);
+						const player = lobbyP.find((item) => item.id === p.id);
 						if (!player || !player.name) return null;
 						return <TeamPlayerItem key={player.id} team={name} {...player} />;
 					})}

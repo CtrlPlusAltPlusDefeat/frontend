@@ -5,6 +5,7 @@ import { usePlayerAction } from '../../../stores/game/gameActions';
 import { useGameStore } from '../../../stores/game/gameStore';
 import { useGetPlayerTeam } from '../../../hooks/game/getPlayerTeam';
 import ActionButton from '../../common/ActionButton/ActionButton';
+import CardGrid from '../../game/CardGrid';
 
 interface PanelProps {
 	team: Team;
@@ -20,6 +21,9 @@ export const LeftPanel = ({ team }: PanelProps) => {
 
 export const MiddlePanel = () => {
 	const currentTeam = useGameStore((s) => s.state?.currentTurn);
+	const xLength = useGameStore((s) => s.game?.xLength) ?? 0;
+	const yLength = useGameStore((s) => s.game?.yLength) ?? 0;
+	const cards = useGameStore((s) => s.game?.cards) ?? [];
 	const playerTeam = useGetPlayerTeam();
 	const playerAction = usePlayerAction();
 
@@ -27,6 +31,7 @@ export const MiddlePanel = () => {
 		<div className="w-full">
 			<p className={currentTeam ? getTeamTextColour(currentTeam) : ''}>current team: {currentTeam}</p>
 			{(playerTeam?.name === currentTeam || currentTeam === '') && <ActionButton state={'danger'} text={'Player Action'} onClick={playerAction} />}
+			<CardGrid cards={cards} xLength={xLength} yLength={yLength} />
 		</div>
 	);
 };

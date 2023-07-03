@@ -1,4 +1,5 @@
 export type TeamName = 'red' | 'blue';
+export type Role = 'operative' | 'spymaster';
 export type State = 'prematch' | 'inprogress' | 'postmatch';
 
 export interface GameSession {
@@ -33,9 +34,13 @@ export interface GameSessionState {
 	state: State;
 }
 
+export interface WordGuessPlayerData {
+	role: Role;
+}
+
 export interface TeamPlayer {
 	id: string;
-	data?: string;
+	data?: WordGuessPlayerData;
 }
 
 export interface Team {

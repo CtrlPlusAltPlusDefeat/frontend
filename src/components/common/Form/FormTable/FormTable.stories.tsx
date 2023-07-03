@@ -95,8 +95,6 @@ const props: FormTableProps<typeof schema> = {
 		}
 	],
 	onSubmit(values, helpers) {
-		console.log('select', typeof values.testSelect, values.testSelect);
-
 		if (values.password !== values.password2) {
 			helpers.setFieldError('password', "Passwords don't match");
 			helpers.setFieldError('password2', "Passwords don't match");

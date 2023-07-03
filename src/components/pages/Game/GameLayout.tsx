@@ -13,7 +13,7 @@ interface PanelProps {
 
 export const LeftPanel = ({ team }: PanelProps) => {
 	return (
-		<div>
+		<div className={'w-1/5'}>
 			<TeamCard {...team} />
 		</div>
 	);
@@ -38,7 +38,7 @@ export const MiddlePanel = () => {
 
 export const RightPanel = ({ team }: PanelProps) => {
 	return (
-		<div>
+		<div className={'w-1/5'}>
 			<TeamCard {...team} />
 		</div>
 	);

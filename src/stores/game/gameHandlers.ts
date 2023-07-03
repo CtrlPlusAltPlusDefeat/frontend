@@ -36,6 +36,7 @@ export const useHandleSwapTeam = () => {
 	return useCallback(
 		(payload: SocketMessage) => {
 			if (!isSwapTeams(payload)) return;
+
 			setTeams(payload.data);
 		},
 		[setTeams]

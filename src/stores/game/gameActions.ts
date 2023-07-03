@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useWebsocket } from '../../contexts/WebSocketContext';
 import { GetStateReq, PlayerActionReq, SwapTeamsReq } from '../../types/socket/game/request';
 import { useLobbyStore } from '../lobby/lobbyStore';
-import { TeamName } from '../../types/socket/game/types';
+import { Role, TeamName } from '../../types/socket/game/types';
 
 export const useGetState = ({ gameSessionId, lobbyId }: { gameSessionId?: string; lobbyId?: string }) => {
 	const { send, isConnected } = useWebsocket();
@@ -34,10 +34,14 @@ export const useSwapTeam = () => {
 	const { send, isConnected } = useWebsocket();
 
 	return useCallback(
-		(team: TeamName) => {
+		(team: TeamName, role: Role) => {
 			if (!isConnected) return;
 			if (!gameSessionId || !lobbyId) return;
-			const payload: SwapTeamsReq = { service: 'game', action: 'swap-teams', data: { lobbyId, gameSessionId, team } };
+			const payload: SwapTeamsReq = {
+				service: 'game',
+				action: 'swap-teams',
+				data: { lobbyId, gameSessionId, team, role }
+			};
 			send(payload, true);
 		},
 		[isConnected, gameSessionId, lobbyId, send]

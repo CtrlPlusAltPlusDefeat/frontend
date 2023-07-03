@@ -7,7 +7,7 @@ interface TeamPlayerItemProps extends LobbyPlayer {
 
 const TeamPlayerItem = ({ name, team }: TeamPlayerItemProps) => {
 	return (
-		<div className={`w-full flex items-center justify-between hover:cursor p-6 h-16 last:rounded-b hover:drop-shadow hover:ease-in duration-100 ${getTeamCardColour(team)}`}>
+		<div className={`w-full flex items-center justify-between p-6 h-16 last:rounded-b ${getTeamCardColour(team)}`}>
 			<div className="flex flex-col">{name}</div>
 		</div>
 	);

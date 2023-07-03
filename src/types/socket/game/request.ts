@@ -1,7 +1,7 @@
 import { RequestTypes } from './enum';
 import { SocketMessage } from '../receive';
 import { Services } from '../general';
-import { TeamName } from './types';
+import { Role, TeamName } from './types';
 
 export type GetStateReq = SocketMessage<
 	typeof RequestTypes.ClientActions.GetState,
@@ -27,6 +27,7 @@ export type SwapTeamsReq = SocketMessage<
 		lobbyId: string;
 		gameSessionId: string;
 		team: TeamName;
+		role: Role;
 	},
 	typeof Services.Game
 >;

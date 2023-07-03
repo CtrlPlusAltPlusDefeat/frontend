@@ -6,3 +6,9 @@ export const useGetPlayerTeam = () => {
 	const teams = useGameStore((s) => s.teams);
 	return teams.find((t) => t.players.find((p) => p.id === player?.id ?? ''));
 };
+
+export const useGetPlayerRole = () => {
+	const player = useLobbyStore((s) => s.player);
+	const team = useGetPlayerTeam();
+	return team?.players.find((p) => p.id === player?.id ?? '')?.data?.role;
+};

@@ -1,10 +1,26 @@
 export type TeamName = 'red' | 'blue';
+export type Role = 'operative' | 'spymaster';
 export type State = 'prematch' | 'inprogress' | 'postmatch';
 
 export interface GameSession {
+	game: WordGuessGame;
 	info: GameSessionInfo;
 	state: GameSessionState;
 	teams: Team[];
+}
+
+export type CardColour = 'red' | 'blue' | 'white' | 'black' | '';
+
+export interface Card {
+	colour: CardColour;
+	revealed: boolean;
+	word: string;
+}
+
+export interface WordGuessGame {
+	cards: Card[][];
+	xLength: number;
+	yLength: number;
 }
 
 export interface GameSessionInfo {
@@ -18,9 +34,13 @@ export interface GameSessionState {
 	state: State;
 }
 
+export interface WordGuessPlayerData {
+	role: Role;
+}
+
 export interface TeamPlayer {
 	id: string;
-	data?: string;
+	data?: WordGuessPlayerData;
 }
 
 export interface Team {

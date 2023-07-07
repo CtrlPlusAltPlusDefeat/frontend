@@ -1,8 +1,8 @@
 import { useLobbyStore } from '../stores/lobby/lobbyStore';
 import LobbyController from './LobbyController';
 
-import { useLoadGameSession } from '../hooks/game/loadGameSession';
 import Game from '../components/pages/Game/Game';
+import { useLoadGameSession } from '../hooks/gameSessionHooks';
 
 const GameController = () => {
 	const inGame = useLobbyStore((state) => state.lobby?.inGame);

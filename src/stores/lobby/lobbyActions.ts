@@ -1,8 +1,43 @@
 import { useWebsocket } from '../../contexts/WebSocketContext';
-import { CreateLobby, JoinLobby, LeaveLobby, LoadGame } from '../../types/socket/lobby/request';
+
 import { useCallback } from 'react';
 import { useLobbyStore } from './lobbyStore';
 import { useNavigate } from 'react-router-dom';
+import { SocketMessage } from '../../hooks/socket';
+import { LobbyActions, Services } from '../../common/enum';
+
+export type CreateLobby = SocketMessage<
+	typeof LobbyActions.Client.Create,
+	{
+		name: string;
+	},
+	typeof Services.Lobby
+>;
+
+export type JoinLobby = SocketMessage<
+	typeof LobbyActions.Client.Join,
+	{
+		lobbyId: string;
+		name: string;
+	},
+	typeof Services.Lobby
+>;
+
+export type LeaveLobby = SocketMessage<
+	typeof LobbyActions.Client.Leave,
+	{
+		lobbyId: string;
+	},
+	typeof Services.Lobby
+>;
+
+export type LoadGame = SocketMessage<
+	typeof LobbyActions.Client.LoadGame,
+	{
+		lobbyId: string;
+	},
+	typeof Services.Lobby
+>;
 
 export const useCreateLobby = () => {
 	const { send } = useWebsocket();

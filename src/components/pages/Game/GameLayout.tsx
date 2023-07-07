@@ -1,11 +1,13 @@
-//full width on small screens, 1/3 on medium screens
-import { getTeamTextColour, Team } from '../../../types/socket/game/types';
-import TeamCard from '../../game/TeamCard';
-import { usePlayerAction } from '../../../stores/game/gameActions';
+import React from 'react';
+
 import { useGameStore } from '../../../stores/game/gameStore';
-import { useGetPlayerTeam } from '../../../hooks/game/getPlayerTeam';
+import { useGetPlayerTeam } from '../../../hooks/playerHooks';
+import { usePlayerAction } from '../../../stores/game/gameActions';
+import { getTeamTextColour } from '../../../common/wordguess';
 import ActionButton from '../../common/ActionButton/ActionButton';
-import CardGrid from '../../game/CardGrid';
+import { Team } from '../../../common/interfaces';
+import CardGrid from './components/CardGrid';
+import TeamCard from './components/TeamCard';
 
 interface PanelProps {
 	team: Team;
@@ -39,6 +41,7 @@ export const MiddlePanel = () => {
 export const RightPanel = ({ team }: PanelProps) => {
 	return (
 		<div className={'w-1/5'}>
+			{/* eslint-disable-next-line react/jsx-no-undef */}
 			<TeamCard {...team} />
 		</div>
 	);

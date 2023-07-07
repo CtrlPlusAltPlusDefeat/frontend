@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import { GameSessionInfo, GameSessionState, Team, WordGuessGame } from '../../types/socket/game/types';
+import { WordGuessGame } from '../../common/wordguess';
+import { GameSessionInfo, GameSessionState, Team } from '../../common/interfaces';
 
 interface GameStateStore {
 	game?: WordGuessGame;

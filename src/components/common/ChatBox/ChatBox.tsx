@@ -6,7 +6,7 @@ import { Row } from '../Form/types';
 import { useChatStore } from '../../../stores/chat/chatStore';
 import { useLoadMessages, useSendMessage } from '../../../stores/chat/chatActions';
 import { useLobbyStore } from '../../../stores/lobby/lobbyStore';
-import { getVerticalScrollPercentage, useOnScroll, useOnScrollEnd } from '../../../hooks/elementScroll';
+import { getVerticalScrollPercentage, useOnScroll, useOnScrollEnd } from '../../../hooks/scrollBarHooks';
 import { ChatMessage } from './ChatMessage';
 import { ChatDateLabel } from './ChatDateLabel';
 

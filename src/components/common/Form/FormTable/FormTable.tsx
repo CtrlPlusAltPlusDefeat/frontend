@@ -23,18 +23,19 @@ export interface FormTableProps<Schema extends z.ZodType<unknown>> {
 	children?: React.ReactNode;
 	rows: Row<Schema>[];
 	onSubmit: (values: SchemaRecord<Schema>, helpers: FormikHelpers<Record<string, unknown>>) => void | Promise<unknown>;
+	onChange?: (values: SchemaRecord<Schema>, helpers: FormikHelpers<Record<string, unknown>>) => void | Promise<unknown>;
 	submitButton?: SubmitButtonProps;
 	animation?: AnimationControls | TargetAndTransition | VariantLabels | boolean;
 	externalButton?: HTMLButtonElement;
 }
 
-const FormTable = <Schema extends z.ZodType<unknown>>({ schema, rows, children, onSubmit, animation, submitButton, externalButton }: FormTableProps<Schema>) => {
+const FormTable = <Schema extends z.ZodType<unknown>>({ schema, rows, children, onSubmit, onChange, animation, submitButton, externalButton }: FormTableProps<Schema>) => {
 	const defaultValues: Record<string, unknown> = {};
 	rows.forEach((row) =>
 		row.fields.forEach((input) => {
 			const { field } = input;
 			//required so we don't get a warning about uncontrolled inputs
-			defaultValues[field.id] = field.default || '';
+			defaultValues[field.id] = field.defaultVal || '';
 		})
 	);
 
@@ -62,7 +63,14 @@ const FormTable = <Schema extends z.ZodType<unknown>>({ schema, rows, children, 
 
 	return (
 		<FormikProvider value={formik}>
-			<Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+			<Form
+				autoComplete="off"
+				noValidate
+				onSubmit={handleSubmit}
+				onChange={() => {
+					onChange?.(formik.values as SchemaRecord<Schema>, formik);
+				}}
+			>
 				<motion.div
 					animate={{
 						transition: {

@@ -13,7 +13,7 @@ const CardGrid = ({ cards }: CardGridProps) => {
 							<tr key={`row-${rowI}`}>
 								{row.map((col, colI) => {
 									return (
-										<td key={`col-${rowI}-${colI}`} className={'w-32'}>
+										<td key={`col-${rowI}-${colI}`}>
 											<Card {...col} />
 										</td>
 									);

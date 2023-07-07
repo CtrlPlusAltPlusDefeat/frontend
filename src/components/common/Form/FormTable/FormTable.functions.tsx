@@ -38,17 +38,16 @@ export const getFields = <Schema extends z.ZodType<unknown>>({ rows, getFieldPro
 			<div key={`grid-${rowIndex}`} className={'flex gap-2'}>
 				{row.fields.map((input, fieldIndex) => {
 					const { type, field } = input;
-					delete field.default;
-
 					const error = errors[field.id] as string | undefined;
 					const hasTouched: boolean | undefined = touched[field.id] as boolean | undefined;
-
+					const fieldProps = { ...field };
+					delete fieldProps.defaultVal;
 					return (
 						<div key={`grid-${rowIndex}-${fieldIndex}`} className="w-full">
 							{getInput({
 								type,
 								field: {
-									...field,
+									...fieldProps,
 									...getFieldProps(field.id),
 									error: Boolean(hasTouched && error),
 									helperText: hasTouched && typeof error === 'string' ? error : field.helperText

@@ -8,6 +8,7 @@ import ActionButton from '../../common/ActionButton/ActionButton';
 import { Team } from '../../../common/interfaces';
 import CardGrid from './components/CardGrid';
 import TeamCard from './components/TeamCard';
+import { capitalizeFirstLetter } from '../../../common/general';
 
 interface PanelProps {
 	team: Team;
@@ -26,13 +27,16 @@ export const MiddlePanel = () => {
 	const xLength = useGameStore((s) => s.game?.xLength) ?? 0;
 	const yLength = useGameStore((s) => s.game?.yLength) ?? 0;
 	const cards = useGameStore((s) => s.game?.cards) ?? [];
+	const state = useGameStore((s) => s.state?.state);
 	const playerTeam = useGetPlayerTeam();
 	const playerAction = usePlayerAction();
 
+	const textColour = getTeamTextColour(currentTeam || '');
+
 	return (
 		<div className="w-full">
-			<p className={currentTeam ? getTeamTextColour(currentTeam) : ''}>current team: {currentTeam}</p>
-			{(playerTeam?.name === currentTeam || currentTeam === '') && <ActionButton state={'danger'} text={'Player Action'} onClick={playerAction} />}
+			{currentTeam && <p className={`${textColour} text-center`}>Current Turn {capitalizeFirstLetter(currentTeam)}</p>}
+			{(playerTeam?.name === currentTeam || currentTeam === '') && state === 'prematch' && <ActionButton state={'danger'} text={'Player Action'} onClick={playerAction} />}
 			<CardGrid cards={cards} xLength={xLength} yLength={yLength} />
 		</div>
 	);

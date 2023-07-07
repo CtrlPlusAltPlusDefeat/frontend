@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { ActionButtonState } from '../ActionButton/ActionButton';
 import React from 'react';
+import { ActionButtonState } from '../ActionButton/ActionButton';
 import { SelectInputProps } from '@mui/material/Select/SelectInput';
 import { InputProps as StandardInputProps } from '@mui/material/Input/Input';
 
@@ -31,7 +31,7 @@ export interface Input<Id = string> {
 	required?: boolean;
 	disabled?: boolean;
 	value?: unknown;
-	default?: unknown;
+	defaultVal?: unknown;
 	error?: boolean;
 	onChange?: StandardInputProps['onChange'];
 	onBlur?: StandardInputProps['onBlur'];
@@ -47,7 +47,7 @@ export interface Select<Id = string> {
 	label?: string;
 	helperText?: React.ReactNode;
 	items?: (string | { name: string; value: string })[];
-	default?: unknown;
+	defaultVal?: unknown;
 	onChange?: SelectInputProps<string>['onChange'];
 	onBlur?: StandardInputProps['onBlur'];
 }
@@ -60,7 +60,7 @@ export interface Radio<Id = string> {
 	label?: string;
 	helperText?: React.ReactNode;
 	items?: (string | { name: string; value: string })[];
-	default?: unknown;
+	defaultVal?: unknown;
 	onChange?: React.FormEventHandler<HTMLLabelElement>;
 	onBlur?: React.FocusEventHandler<HTMLLabelElement>;
 }

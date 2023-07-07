@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { Message } from '../../types/socket/chat/types';
 import { immer } from 'zustand/middleware/immer';
+import { Message } from '../../common/interfaces';
 
 interface ChatStoreState {
 	loadedHistoric: boolean;

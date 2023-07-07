@@ -1,7 +1,16 @@
 import { devTools } from '../../common/devTools';
-import { Services } from '../../types/socket/general';
-import { CreateSession, UseSession } from '../../types/socket/player/request';
+import { SocketMessage } from '../../hooks/socket';
+import { PlayerAction, Services } from '../../common/enum';
 
+export type UseSession = SocketMessage<
+	typeof PlayerAction.Client.UseSession,
+	{
+		sessionId: string;
+	},
+	typeof Services.Player
+>;
+
+export type CreateSession = SocketMessage<typeof PlayerAction.Client.CreateSession, {}, typeof Services.Player>;
 export const getSessionRequest = () => {
 	const sessionId = sessionStorage.getItem('session-id');
 

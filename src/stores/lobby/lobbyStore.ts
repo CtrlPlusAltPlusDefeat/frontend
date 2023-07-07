@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import { LobbyDetails, LobbyPlayer } from '../../types/socket/lobby/types';
+import { LobbyDetails, LobbyPlayer } from '../../common/interfaces';
 
 interface LobbyStoreState {
 	lobby?: LobbyDetails;

@@ -1,7 +1,6 @@
 import React, { createContext, useContext } from 'react';
-import { SocketMessage } from '../types/socket/receive';
-import { useRoute } from '../hooks/socket/route';
-import { useSocket } from '../hooks/socket/socket';
+import { useRoute } from '../hooks/routeHooks';
+import { SocketMessage, useSocket } from '../hooks/socket';
 
 interface WebSocketContextObj {
 	isConnected: boolean;

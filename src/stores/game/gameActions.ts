@@ -1,8 +1,38 @@
 import { useCallback } from 'react';
 import { useWebsocket } from '../../contexts/WebSocketContext';
-import { GetStateReq, PlayerActionReq, SwapTeamsReq } from '../../types/socket/game/request';
 import { useLobbyStore } from '../lobby/lobbyStore';
-import { Role, TeamName } from '../../types/socket/game/types';
+import { SocketMessage } from '../../hooks/socket';
+import { GameActions, Services } from '../../common/enum';
+import { Role, TeamName } from '../../common/interfaces';
+
+export type GetStateReq = SocketMessage<
+	typeof GameActions.Client.GetState,
+	{
+		lobbyId: string;
+		gameSessionId: string;
+	},
+	typeof Services.Game
+>;
+
+export type PlayerActionReq = SocketMessage<
+	typeof GameActions.Client.PlayerAction,
+	{
+		lobbyId: string;
+		gameSessionId: string;
+	},
+	typeof Services.Game
+>;
+
+export type SwapTeamsReq = SocketMessage<
+	typeof GameActions.Client.SwapTeams,
+	{
+		lobbyId: string;
+		gameSessionId: string;
+		team: TeamName;
+		role: Role;
+	},
+	typeof Services.Game
+>;
 
 export const useGetState = ({ gameSessionId, lobbyId }: { gameSessionId?: string; lobbyId?: string }) => {
 	const { send, isConnected } = useWebsocket();

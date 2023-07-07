@@ -1,6 +1,7 @@
+import React from 'react';
 import { useWebsocket } from '../../../contexts/WebSocketContext';
-import JoinGameCard from '../../home/JoinGameCard';
-import CreateGameCard from '../../home/CreateGameCard';
+import CreateGameCard from './components/CreateGameCard';
+import JoinGameCard from './components/JoinGameCard';
 
 const Home = () => {
 	const { isConnected } = useWebsocket();

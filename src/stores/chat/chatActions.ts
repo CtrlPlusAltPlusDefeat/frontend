@@ -1,6 +1,25 @@
 import { useWebsocket } from '../../contexts/WebSocketContext';
 import { useLobbyStore } from '../lobby/lobbyStore';
-import { LoadChat, SendChat } from '../../types/socket/chat/request';
+import { SocketMessage } from '../../hooks/socket';
+import { ChatActions, Services } from '../../common/enum';
+
+export type SendChat = SocketMessage<
+	typeof ChatActions.Client.Send,
+	{
+		text: string;
+		lobbyId: string;
+	},
+	typeof Services.Chat
+>;
+
+export type LoadChat = SocketMessage<
+	typeof ChatActions.Client.Load,
+	{
+		timestamp: number;
+		lobbyId: string;
+	},
+	typeof Services.Chat
+>;
 
 export const useSendMessage = () => {
 	const lobbyId = useLobbyStore((s) => s.lobbyId);

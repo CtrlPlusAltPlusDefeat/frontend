@@ -1,7 +1,17 @@
 import { useCallback } from 'react';
-import { SocketMessage } from '../../types/socket/receive';
-import { isGetState, isPlayerAction, isSwapTeams } from '../../types/socket/game/response';
+
 import { useGameStore } from './gameStore';
+import { SocketMessage } from '../../hooks/socket';
+import { GameActions, Services } from '../../common/enum';
+import { GameSession, GameSessionState, Team } from '../../common/interfaces';
+
+export type GetStateRes = SocketMessage<typeof GameActions.Server.GetState, GameSession, typeof Services.Game>;
+export type PlayerActionRes = SocketMessage<typeof GameActions.Server.PlayerAction, GameSessionState, typeof Services.Game>;
+export type SwapTeamsRes = SocketMessage<typeof GameActions.Server.SwapTeams, Team[], typeof Services.Game>;
+
+export const isGetState = (msg: SocketMessage): msg is GetStateRes => msg.action === GameActions.Server.GetState;
+export const isPlayerAction = (msg: SocketMessage): msg is PlayerActionRes => msg.action === GameActions.Server.PlayerAction;
+export const isSwapTeams = (msg: SocketMessage): msg is SwapTeamsRes => msg.action === GameActions.Server.SwapTeams;
 
 export const useHandleGetState = () => {
 	const setState = useGameStore((s) => s.setState);

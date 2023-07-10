@@ -58,9 +58,10 @@ export interface Radio<Id = string> {
 	disabled?: boolean;
 	error?: boolean;
 	label?: string;
+	value?: string;
 	helperText?: React.ReactNode;
 	items?: (string | { name: string; value: string })[];
 	defaultVal?: unknown;
-	onChange?: React.FormEventHandler<HTMLLabelElement>;
-	onBlur?: React.FocusEventHandler<HTMLLabelElement>;
+	onChange?: React.FormEventHandler<HTMLDivElement>;
+	onBlur?: React.FocusEventHandler<HTMLDivElement>;
 }

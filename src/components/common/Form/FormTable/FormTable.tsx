@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { z } from 'zod';
-import { Form, FormikProvider, useFormik } from 'formik';
+import { Form, FormikProvider, useFormik, useFormikContext } from 'formik';
 import { FormikHelpers } from 'formik/dist/types';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { AnimationControls, motion, TargetAndTransition, VariantLabels } from 'framer-motion';
@@ -22,12 +22,21 @@ export interface FormTableProps<Schema extends z.ZodType<unknown>> {
 	schema: Schema;
 	children?: React.ReactNode;
 	rows: Row<Schema>[];
-	onSubmit: (values: SchemaRecord<Schema>, helpers: FormikHelpers<Record<string, unknown>>) => void | Promise<unknown>;
+	onSubmit?: (values: SchemaRecord<Schema>, helpers: FormikHelpers<Record<string, unknown>>) => void | Promise<unknown>;
 	onChange?: (values: SchemaRecord<Schema>, helpers: FormikHelpers<Record<string, unknown>>) => void | Promise<unknown>;
+	values?: SchemaRecord<Schema>;
 	submitButton?: SubmitButtonProps;
 	animation?: AnimationControls | TargetAndTransition | VariantLabels | boolean;
 	externalButton?: HTMLButtonElement;
 }
+
+const FormObserver = ({ onChange }: { onChange: (values: unknown) => void }) => {
+	const { values } = useFormikContext();
+	useEffect(() => {
+		onChange(values);
+	}, [onChange, values]);
+	return null;
+};
 
 const FormTable = <Schema extends z.ZodType<unknown>>({ schema, rows, children, onSubmit, onChange, animation, submitButton, externalButton }: FormTableProps<Schema>) => {
 	const defaultValues: Record<string, unknown> = {};
@@ -44,9 +53,11 @@ const FormTable = <Schema extends z.ZodType<unknown>>({ schema, rows, children, 
 		validationSchema: toFormikValidationSchema(schema),
 		onSubmit: (values, formikHelpers) => {
 			formik.setSubmitting(false);
-			onSubmit(values as SchemaRecord<Schema>, formikHelpers);
+			onSubmit?.(values as SchemaRecord<Schema>, formikHelpers);
 		}
 	});
+
+	const formikRef = React.useRef(formik);
 
 	const externalButtonHandler = useCallback(() => {
 		formik.submitForm().catch(console.error);
@@ -59,18 +70,17 @@ const FormTable = <Schema extends z.ZodType<unknown>>({ schema, rows, children, 
 		};
 	}, [externalButton, externalButtonHandler]);
 
-	const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
+	const onChangeHandler = useCallback(
+		(v: unknown) => {
+			onChange?.(v as SchemaRecord<Schema>, formikRef.current);
+		},
+		[onChange]
+	);
 
+	const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
 	return (
 		<FormikProvider value={formik}>
-			<Form
-				autoComplete="off"
-				noValidate
-				onSubmit={handleSubmit}
-				onChange={() => {
-					onChange?.(formik.values as SchemaRecord<Schema>, formik);
-				}}
-			>
+			<Form autoComplete="off" noValidate onSubmit={handleSubmit}>
 				<motion.div
 					animate={{
 						transition: {
@@ -81,10 +91,10 @@ const FormTable = <Schema extends z.ZodType<unknown>>({ schema, rows, children, 
 					<motion.div className="flex gap-3 flex-col" initial={{ opacity: 0, y: 40 }} animate={animation ?? defaultAnimation}>
 						{getFields({ rows, getFieldProps, errors, touched })}
 						{children}
-
 						{submitButton && <ActionButton classes={['w-full']} type="submit" state="success" text={isSubmitting ? 'loading...' : submitButton.text} />}
 					</motion.div>
 				</motion.div>
+				{onChange && <FormObserver onChange={onChangeHandler} />}
 			</Form>
 		</FormikProvider>
 	);

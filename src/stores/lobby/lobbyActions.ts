@@ -5,6 +5,7 @@ import { useLobbyStore } from './lobbyStore';
 import { useNavigate } from 'react-router-dom';
 import { SocketMessage } from '../../hooks/socket';
 import { LobbyActions, Services } from '../../common/enum';
+import { Settings } from '../../common/interfaces';
 
 export type CreateLobby = SocketMessage<
 	typeof LobbyActions.Client.Create,
@@ -36,6 +37,14 @@ export type LoadGame = SocketMessage<
 	{
 		lobbyId: string;
 	},
+	typeof Services.Lobby
+>;
+
+export type SaveSettings = SocketMessage<
+	typeof LobbyActions.Client.SaveSettings,
+	{
+		lobbyId: string;
+	} & Settings,
 	typeof Services.Lobby
 >;
 
@@ -89,4 +98,17 @@ export const useStartGame = () => {
 		const payload: LoadGame = { service: 'lobby', action: 'load-game', data: { lobbyId } };
 		send(payload, true);
 	}, [isConnected, lobbyId, send]);
+};
+
+export const useSaveSettings = () => {
+	const lobbyId = useLobbyStore((state) => state.lobbyId);
+	const { send, isConnected } = useWebsocket();
+	return useCallback(
+		(settings: Settings) => {
+			if (!isConnected || !lobbyId) return;
+			const payload: SaveSettings = { service: 'lobby', action: 'save-settings', data: { lobbyId, ...settings } };
+			send(payload, true);
+		},
+		[isConnected, lobbyId, send]
+	);
 };

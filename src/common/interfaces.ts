@@ -11,6 +11,13 @@ export interface GameSession {
 	teams: Team[];
 }
 
+export interface Settings<Game = unknown> {
+	gameId: number;
+	maxPlayers: number;
+	teams: number;
+	game: Game;
+}
+
 export interface GameSessionInfo {
 	lobbyId: string;
 	gameSessionId: string;
@@ -45,7 +52,7 @@ export type LobbyDetails = {
 	lobbyId: string;
 	gameSessionId: string;
 	inGame: boolean;
-	settings: string;
+	settings?: Settings<string>;
 };
 
 export interface Message {

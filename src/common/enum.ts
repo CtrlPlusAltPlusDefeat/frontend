@@ -1,14 +1,9 @@
-interface Actions {
-	Client: { [key: string]: string };
-	Server: { [key: string]: string };
-}
-
-export const ChatActions: Actions = {
+export const ChatActions = {
 	Client: { Send: 'send', Load: 'load' },
 	Server: { Send: 'send', Load: 'load' }
 } as const;
 
-export const GameActions: Actions = {
+export const GameActions = {
 	Client: {
 		GetState: 'get-state',
 		PlayerAction: 'player-action',
@@ -21,24 +16,26 @@ export const GameActions: Actions = {
 	}
 } as const;
 
-export const LobbyActions: Actions = {
+export const LobbyActions = {
 	Client: {
 		Join: 'join',
 		Leave: 'leave',
 		Create: 'create',
 		SetName: 'set-name',
-		LoadGame: 'load-game'
+		LoadGame: 'load-game',
+		SaveSettings: 'save-settings'
 	},
 	Server: {
 		Joined: 'join',
 		PlayerJoined: 'player-joined',
 		PlayerLeft: 'player-left',
 		NameChange: 'name-change',
-		LoadGame: 'load-game'
+		LoadGame: 'load-game',
+		SaveSettings: 'save-settings'
 	}
 } as const;
 
-export const PlayerAction: Actions = {
+export const PlayerAction = {
 	Client: {
 		CreateSession: 'create-session',
 		UseSession: 'use-session'
@@ -60,10 +57,5 @@ export const GameIds = {
 } as const;
 
 export type GameId = (typeof GameIds)[keyof typeof GameIds];
-
-export interface BaseSettings {
-	gameId: GameId;
-	maxPlayers: number;
-}
 
 export type Status = 'not-found' | 'loading' | 'loaded' | 'idle';

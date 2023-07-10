@@ -1,5 +1,5 @@
-import { Role, TeamName } from './interfaces';
-import { BaseSettings, GameIds } from './enum';
+import { Role, Settings, TeamName } from './interfaces';
+import { GameIds } from './enum';
 
 export type CardColour = 'red' | 'blue' | 'white' | 'black' | '';
 
@@ -51,6 +51,13 @@ export const getTeamBackgroundColour = (name: CardColour) => {
 	return '';
 };
 
-export interface WordGuessSettings extends BaseSettings {}
+export interface WordGuessSettings extends Settings {
+	game: {
+		blackCards: number;
+		whiteCards: number;
+		colouredCards: number;
+		dynamic: boolean;
+	};
+}
 
-export const isWordGuessSettings = (json: BaseSettings): json is WordGuessSettings => json.gameId === GameIds.WordGuess;
+export const isWordGuessSettings = (json: Settings): json is WordGuessSettings => json.gameId === GameIds.WordGuess;

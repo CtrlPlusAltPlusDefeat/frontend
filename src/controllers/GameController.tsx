@@ -1,8 +1,9 @@
+import { lazy } from 'react';
 import { useLobbyStore } from '../stores/lobby/lobbyStore';
-import LobbyController from './LobbyController';
-
-import Game from '../components/pages/Game/Game';
 import { useLoadGameSession } from '../hooks/gameSessionHooks';
+import Game from '../components/pages/Game/Game';
+
+const LobbyController = lazy(() => import('./LobbyController'));
 
 const GameController = () => {
 	const inGame = useLobbyStore((state) => state.lobby?.inGame);

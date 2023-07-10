@@ -13,7 +13,7 @@ const rows: Row<typeof schema>[] = [
 				field: {
 					id: 'lobbyId',
 					label: 'Lobby Code',
-					default: ''
+					defaultVal: ''
 				}
 			}
 		]

@@ -31,7 +31,7 @@ const props: FormTableProps<typeof schema> = {
 					field: {
 						id: 'firstName',
 						label: 'First Name',
-						default: 'Tom'
+						defaultVal: 'Tom'
 					}
 				},
 				{
@@ -39,7 +39,7 @@ const props: FormTableProps<typeof schema> = {
 					field: {
 						id: 'lastName',
 						label: 'Last Name',
-						default: 'Penn'
+						defaultVal: 'Penn'
 					}
 				}
 			]
@@ -52,7 +52,7 @@ const props: FormTableProps<typeof schema> = {
 						label: 'Password',
 						id: 'password',
 						required: true,
-						default: '123'
+						defaultVal: '123'
 					}
 				},
 				{
@@ -61,7 +61,7 @@ const props: FormTableProps<typeof schema> = {
 						label: 'Confirm Password',
 						id: 'password2',
 						required: true,
-						default: '1222223'
+						defaultVal: '1222223'
 					}
 				}
 			]

@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { lazy, useCallback, useEffect } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import HomeController from './controllers/HomeController';
-import GameController from './controllers/GameController';
+
+const HomeController = lazy(() => import('./controllers/HomeController'));
+const GameController = lazy(() => import('./controllers/GameController'));
 
 const router = createBrowserRouter([
 	{

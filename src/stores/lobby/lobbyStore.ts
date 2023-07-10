@@ -1,14 +1,17 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { LobbyDetails, LobbyPlayer } from '../../common/interfaces';
+import { WordGuessSettings } from '../../common/wordguess';
 
 interface LobbyStoreState {
-	lobby?: LobbyDetails;
+	lobby?: Omit<LobbyDetails, 'settings'>;
 	player?: LobbyPlayer;
+	settings?: WordGuessSettings;
 	lobbyId?: string;
 	setLobby: ({ lobby }: { lobby: LobbyDetails }) => void;
 	setPlayer: ({ player }: { player: LobbyPlayer }) => void;
 	setLobbyId: (lobbyId?: string) => void;
+	setSettings: (settings?: WordGuessSettings) => void;
 	upsertPlayer: (player: LobbyPlayer) => void;
 	clear: () => void;
 }
@@ -30,6 +33,10 @@ export const useLobbyStore = create(
 		setLobbyId: (lobbyId) =>
 			set(() => {
 				return { lobbyId };
+			}),
+		setSettings: (settings) =>
+			set(() => {
+				return { settings };
 			}),
 		upsertPlayer: (player) =>
 			set((state) => {

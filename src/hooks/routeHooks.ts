@@ -6,7 +6,7 @@ import { useReceivedMessage } from '../stores/chat/chatHandlers';
 import { useLoadMessages } from '../stores/chat/chatHandlers';
 
 import { useSetSession } from '../stores/player/playerHandlers';
-import { useJoinedLobby, useLoadGame, usePlayerJoined, usePlayerLeft } from '../stores/lobby/lobbyHandlers';
+import { useJoinedLobby, useLoadGame, usePlayerJoined, usePlayerLeft, useSaveSettings } from '../stores/lobby/lobbyHandlers';
 import { useHandleGetState, useHandlePlayerAction, useHandleSwapTeam } from '../stores/game/gameHandlers';
 import { ChatActions, GameActions, LobbyActions, PlayerAction, Services } from '../common/enum';
 
@@ -71,14 +71,16 @@ const useLobbyRoutes = () => {
 	const playerJoined = usePlayerJoined();
 	const playerLeft = usePlayerLeft();
 	const loadGame = useLoadGame();
+	const saveSettings = useSaveSettings();
 	return useCallback(
 		(routes: RoutesMap) => {
 			add(routes, [`${Services.Lobby}|${LobbyActions.Server.Joined}`, joinedLobby, [handleError]]);
 			add(routes, [`${Services.Lobby}|${LobbyActions.Server.PlayerJoined}`, playerJoined, [handleError]]);
 			add(routes, [`${Services.Lobby}|${LobbyActions.Server.PlayerLeft}`, playerLeft, [handleError]]);
 			add(routes, [`${Services.Lobby}|${LobbyActions.Server.LoadGame}`, loadGame, [handleError]]);
+			add(routes, [`${Services.Lobby}|${LobbyActions.Server.SaveSettings}`, saveSettings, [handleError]]);
 		},
-		[joinedLobby, loadGame, playerJoined, playerLeft]
+		[joinedLobby, loadGame, playerJoined, playerLeft, saveSettings]
 	);
 };
 const useGameRoutes = () => {
